@@ -1,6 +1,13 @@
 import pytest
 
 from causalbridge.schemas import Query, RuntimeCase, ToolRequest
+from causalbridge.tools.graph import (
+    ancestors,
+    descendants,
+    has_path,
+    parents,
+    valid_adjustment_sets,
+)
 from causalbridge.tools.reference import ReferenceBackend, valid_adjustment
 from causalbridge.verifier.contracts import check_preconditions
 
@@ -123,6 +130,37 @@ def test_collider_adjustment_is_invalid(assumptions):
     q = Query(cause="X", outcome="Y", question_type="adjustment_validity", adjustment_set=("Z",))
     assert not valid_adjustment(case, q)
     assert run(case, q, "is_valid_adjustment_set").value is False
+
+
+def test_structural_queries_and_adjustment_enumeration(confounded):
+    assert parents(confounded, "Y") == ("X", "Z")
+    assert ancestors(confounded, "Y") == ("X", "Z")
+    assert descendants(confounded, "Z") == ("X", "Y")
+    query = Query(cause="X", outcome="Y", question_type="adjustment_validity")
+    assert has_path(confounded, query)
+    assert valid_adjustment_sets(confounded, query) == (("Z",),)
+    with pytest.raises(ValueError, match="Unknown graph node"):
+        parents(confounded, "missing")
+
+
+def test_unconfounded_empty_adjustment_set_and_mediator_rejection(assumptions):
+    direct = RuntimeCase(
+        case_id="direct",
+        graph_nodes=("X", "Y"),
+        graph_edges=(("X", "Y"),),
+        question="Effect?",
+        assumptions=assumptions,
+    )
+    query = Query(cause="X", outcome="Y", question_type="adjustment_validity")
+    assert valid_adjustment_sets(direct, query) == ((),)
+    chain = RuntimeCase(
+        case_id="chain_structure",
+        graph_nodes=("X", "M", "Y"),
+        graph_edges=(("X", "M"), ("M", "Y")),
+        question="Effect?",
+        assumptions=assumptions,
+    )
+    assert valid_adjustment_sets(chain, query) == ((),)
 
 
 def test_reference_refuses_wrong_evidence_digest(toy):
