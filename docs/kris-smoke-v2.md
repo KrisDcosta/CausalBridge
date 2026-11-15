@@ -167,3 +167,25 @@ claim tolerance. Focused tests passed **117**; full repository checks passed
 **569 tests**, lint/format, both demos, synthetic ANM handshake and package builds.
 The current source changes remain uncommitted. No new live calls were made in
 this phase. See the integration contract for failure and numeric policies.
+
+## PR #8 review follow-up
+
+The native auditor now independently derives completion status and failure reason
+from every saved HTTP response: length termination is truncated; done other than
+literal true is incomplete; missing/empty textual content is incomplete. Stored
+status/reason must match, and incomplete raw responses cannot carry a scorable
+prediction or verification context even when their stored status claims complete.
+
+The analysis export counts claims whenever a parsed prediction exists, including
+binding failures. This does not make the prediction valid, scorable, checked or
+releasable. Parsed empty claims report zero; absent parsed predictions report null.
+
+18 additional cases cover clean and forged/rehashed HTTP completion states,
+synchronized exports/S2 receipts, binding-failure claim retention, empty claims,
+and generation/parse failures. Validation: 587 tests passed, lint/format, both
+Track A demos, both native protocol demos and independent audits, ANM handshake,
+and wheel/sdist builds. Native repeats made zero new scripted calls. A fresh
+frozen environment sync was unavailable because the pinned Ruff wheel was absent
+from the offline cache; validation used the existing installed environment for
+all test/check commands. No new live generations, prompt changes, checker-policy
+changes or historical artifact edits were required.

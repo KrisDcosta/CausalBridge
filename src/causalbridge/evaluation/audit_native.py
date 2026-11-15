@@ -209,6 +209,7 @@ def audit_native(root):
                     key,
                 )
             generation = trace["generation"]
+            http_incomplete = False
             if generation and generation.get("raw_response") is not None:
                 body = _json(generation["raw_response"])
                 content = body.get("message", {}).get("content")
@@ -221,14 +222,26 @@ def audit_native(root):
                     "http_generation_binding",
                     key,
                 )
+                # Derive every HTTP completion state independently of the stored status.
+                expected_status, expected_reason = "complete", None
                 if body.get("done_reason") == "length":
-                    check(
-                        generation.get("status") == "truncated"
-                        and generation.get("failure_reason") == "output_token_limit",
-                        "http_truncation_status",
-                        key,
-                    )
-            if generation and generation.get("status", "complete") != "complete":
+                    expected_status, expected_reason = "truncated", "output_token_limit"
+                elif body.get("done") is not True:
+                    expected_status, expected_reason = "incomplete", "response_not_done"
+                elif not isinstance(content, str) or not content.strip():
+                    expected_status, expected_reason = "incomplete", "missing_text_content"
+                http_incomplete = expected_status != "complete"
+                check(
+                    generation.get("status") == expected_status
+                    and generation.get("failure_reason") == expected_reason,
+                    "http_truncation_status"
+                    if expected_status == "truncated"
+                    else "http_completion_status",
+                    key,
+                )
+            if generation and (
+                http_incomplete or generation.get("status", "complete") != "complete"
+            ):
                 check(
                     trace["failure_stage"] == "generate"
                     and trace["prediction"] is None

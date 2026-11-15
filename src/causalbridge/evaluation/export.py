@@ -34,7 +34,9 @@ def analysis_rows(run: dict, releases: list[dict]) -> list[dict]:
             generation_failure_reason=trace.generation.failure_reason
             if trace and trace.generation
             else None,
-            supplied_claim_count=len(trace.prediction.claims) if usable else None,
+            supplied_claim_count=len(trace.prediction.claims)
+            if trace and trace.prediction is not None
+            else None,
             supporting_claims_status="not_checked",
             checked_claim_count=0,
             released_direction=None,
