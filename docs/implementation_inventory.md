@@ -1,5 +1,24 @@
 # Implementation inventory — 2026-11-14
 
+## Anish's updated branch audit
+
+Fresh clone: `CausalBridge-Anish`, base `48d6cda` (merged PR #4), feature branch
+`codex/anish-anm-provenance`. All remote branch heads were fetched and compared.
+`codex/benchmark-graph-witness` (PR #1), `codex/benchmark-small-pilot` (PR #2),
+`codex/exact-known-witness-joint` (PR #3), and `codex/track-b-integration` (PR #4)
+are represented in main. No other remote implementation branch was present.
+The earlier `anish/causal-engine` work existed locally only; its numerical
+functions/tests are carried forward without replacing merged structural helpers.
+
+Authoritative interface: `docs/track_b_integration_contract.md`, ANMRequestBinding,
+ANMResult/ANMProvenance, DirectionEvidence, VerificationContext and check_prediction.
+These existing schemas, predictor, checker and graph/witness modules are unchanged.
+New files supply the numerical producer and durable originals described in
+`anm_producer.md`. Real-data loader/scorer and actual experiment runner are not
+present on the inspected branches. Their absence does not block synthetic tests.
+
+## Historical Vaishak inventory
+
 Inspected local parent `042d558` and merged PR #1 (`7a47465`), then fast-forwarded
 to that merge. PR #1 adds `benchmark/generator.py`, `benchmark/witness.py`, graph
 query helpers, and tests. It preserves existing RuntimeCase/CPT v1.0 conventions.

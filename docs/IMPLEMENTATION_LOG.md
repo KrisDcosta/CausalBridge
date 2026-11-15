@@ -1,5 +1,52 @@
 # Implementation record
 
+## Anish: roadmap numerical inference and ANM producer — 2026-11-14
+
+- Audited all remote branches. PRs #1-#3 supply graph/witness generation and a
+  seven-case pilot. PR #4 supplies Track B predictor/checker/contracts. After the
+  user requested latest main, created a fresh `CausalBridge-Anish` clone at
+  `48d6cda` and feature branch `codex/anish-anm-provenance`. The old checkout is
+  preserved. Implementation remained local until Anish authorized committing and
+  pushing this feature branch. No PR or teammate message is part of publication.
+- Used `docs/planning/Detailed_Implementation_Roadmap.pdf` for scope and
+  `docs/track_b_integration_contract.md` plus its merged Python schemas for the
+  exact interface. No predictor, verifier, schema, structural graph, or benchmark
+  source changes were needed.
+- Carried forward the local Track A numerical engine/tests from `db26886` while
+  preserving merged graph helpers. Added exact rational propensity-reweighting
+  tests for all merged pilot numeric labels and the +0.30/-0.30 witness with all
+  four observational P(X,Y) cells equal to 0.25. Existing oracle tags are not edited.
+- Added `discovery/anm_requests.py`: normalized numeric rows, explicit validated
+  config, deterministic split, exact ANMRequestBinding and pre-execution sample/
+  config/request/manifest files. Files are exclusive and fsynced. No result is
+  read or computed to create the original. No reference labels enter the API.
+- Added `discovery/anm.py`: held-out bidirectional RBF kernel ridge regression,
+  median-bandwidth biased HSIC, margin/threshold semantics, typed method errors,
+  reproducibility records, exclusive execution markers and artifact verification.
+  NumPy is optional/lazy. Threshold defaults to null; it is not fitted on test data.
+- Added display-only numeric summaries matching the merged NumericSummary schema.
+  Added `anm-run`, explicit Track A engine selection and a synthetic handshake
+  through the existing predictor/checker, with separate evidence/S1/S2 receipts.
+- Added 143 tests to the 267-test merged baseline: 81 carried-forward engine/graph
+  cases, 2 independent pilot checks, and 60 ANM/request/verifier-integration cases.
+  Tests prove request persistence before numerical execution, no result-derived
+  fallback, closed threshold boundaries, sample/config/count/seed/mapping/version
+  binding, original-file preservation, correct display/method sample separation,
+  and S2 operation without new model/method calls.
+- During development, formatting/import issues (including a missing Path import
+  in one new test) were corrected before final verification. Core focused tests
+  and the combined suite pass. Exact results are in `verification.md`.
+- Added the ANM optional dependency/lockfile and full-check/CI coverage. Updated
+  the shared README, handoff, inventory, integration contract and producer guide.
+- Final local checks: 410 tests pass on Python 3.12 and 3.13; 94% total coverage;
+  lint, format, lock check, both Track A demos, computed synthetic handshake,
+  source/wheel builds and isolated base/ANM-extra wheel runs pass.
+- Remaining team work: real data/pair mapping, E1-E4 runner/cache integration,
+  development-selected/frozen tau, scorer and live-model evaluation. These are
+  not replaced by synthetic fixtures or claimed as completed experiments.
+
+## Historical Vaishak implementation
+
 Plan: `docs/superpowers/plans/2026-10-27-vaishak-implementation.md`.
 
 - User authorized assumptions and end-to-end execution; use ordinary project practices
