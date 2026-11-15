@@ -1,6 +1,6 @@
 # Roadmap: completed work versus remaining research
 
-Snapshot: upstream main `b1718e7`, plus Kris's local Phases 1–4 implementation.
+Snapshot: merged main through PR #6, plus the ten-group Track A pilot.
 Sources: [detailed roadmap](../planning/Detailed_Implementation_Roadmap.pdf),
 [working plan](../kris-track-b-plan.md), and the evidence-linked knowledge bank.
 This is a capability/status map, not a percentage-complete claim. Passing synthetic
@@ -8,8 +8,8 @@ integration is distinct from completing the planned real-data experiment.
 
 | Roadmap package | Owner | Evidence-backed status | Remaining |
 | --- | --- | --- | --- |
-| G1/G2 structural DAG utilities and backdoor checks | Arunima | Implemented and tested in merged code | Broader benchmark use / report |
-| G3 exact insufficiency witness | Arunima + Anish | Same observed joint, opposite effects implemented; independent engine confirmation tests merged | Final benchmark/report provenance review |
+| G1/G2 structural DAG utilities and backdoor checks | Arunima | Implemented and tested; used in the ten-group pilot | Live-case review / report |
+| G3 exact insufficiency witness | Arunima + Anish | Same observed joint, opposite effects implemented; independent rational/engine confirmation extended to the ten-group pilot | Human review of new cases; live Track A run / report |
 | N1 numerical intervention engine | Anish | Production engine merged; hand cases, reference comparisons and pilot confirmation tested | Use in final benchmark execution |
 | N2 ANM diagnostic | Anish | Actual KRR/HSIC, pre-saved requests and error/ambiguity controls implemented; our native integration tested | Development threshold choice/freeze; real-data evaluation |
 | D1 data audit/loader/source groups/splits | Faizah | No completed handoff observed in repo or shared planning folder | Audited snapshot, eligibility/exclusions, approved names, source-group splits, runtime/evaluator mapping |
@@ -33,15 +33,15 @@ integration is distinct from completing the planned real-data experiment.
 
 ## Scale and scientific claims
 
-Track A's current small set is seven questions over two graph groups, not the
-roadmap's proposed ten-group validated pilot. Track B's three synthetic integration
+Track A now has 50 validated synthetic questions over ten graph groups. The
+original seven-case set remains a development artifact. Track B's three synthetic integration
 cases are not the planned 15–20 eligible observational pairs. H1 (names), H2
 (method evidence) and H3 (checking) have experimental plumbing but no measured
 real-model results yet. No positive/negative research conclusion is claimed.
 
 ## Current validation evidence
 
-495 combined tests pass; lint/format, reference and production-engine demos,
+502 combined tests pass; lint/format, reference and production-engine demos,
 Anish's real synthetic ANM handshake, and wheel/sdist builds pass. Our final native
 three-case handshake saves 24 model-fixture replies and 12 S2 checks, resumes with
 zero additional model calls, exports 51 analysis rows and passes its read-only audit.

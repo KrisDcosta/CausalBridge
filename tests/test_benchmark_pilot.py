@@ -2,10 +2,16 @@ import json
 
 import pytest
 
-from causalbridge.benchmark.pilot import build_small_pilot, write_small_pilot
+from causalbridge.benchmark.pilot import (
+    build_small_pilot,
+    build_track_a_pilot,
+    write_small_pilot,
+    write_track_a_pilot,
+)
 from causalbridge.llm.client import Generation
 from causalbridge.pipeline import CausalBridge
 from causalbridge.schemas import Proposal, Query, RuntimeCase, ToolRequest
+from causalbridge.tools.engine import CausalEngineBackend
 from causalbridge.tools.reference import ReferenceBackend
 from causalbridge.verifier.contracts import check_preconditions
 
@@ -40,7 +46,7 @@ def test_small_pilot_has_paired_questions_and_checked_labels():
         if row["case_id"] in {"G001_path", "G002_no_path"}
     )
     assert all(
-        row["verification_status"] == "local_checked_awaiting_anish"
+        row["verification_status"] == "independently_checked"
         for row in oracle
         if row["case_id"] not in {"G001_path", "G002_no_path"}
     )
@@ -142,3 +148,77 @@ def test_xy_only_case_cannot_use_backdoor_adjustment():
     )
     assert "visible_joint_over_cause_outcome_adjustment" in check_preconditions(request, case)
     assert ReferenceBackend().execute(request, case).error is not None
+
+
+def test_ten_group_pilot_has_paired_evidence_and_diverse_graphs():
+    cases, oracle = build_track_a_pilot()
+    assert len(cases) == len(oracle) == 50
+    assert len({case.case_id for case in cases}) == 50
+    assert {case.graph_group_id for case in cases} == {f"G{i:03}" for i in range(1, 11)}
+    assert {row["graph_family"] for row in oracle} >= {
+        "confounded_direct",
+        "mediation",
+        "collider",
+        "parallel_mediators",
+        "direct_with_isolate",
+    }
+    assert len({tuple(sorted(case.graph_edges)) for case in cases}) >= 8
+    assert sum(row["answerable"] for row in oracle) == 29
+    assert sum(not row["answerable"] for row in oracle) == 21
+    for group_id in {case.graph_group_id for case in cases}:
+        group = [case for case in cases if case.graph_group_id == group_id]
+        assert len(group) == 5
+        assert len({tuple(case.graph_edges) for case in group}) == 1
+        assert any(case.evidence_level == "graph_only" for case in group)
+        assert any(case.evidence_level == "complete_cpts" for case in group)
+        assert any(case.evidence_level in {"partial_cpts", "observational_joint"} for case in group)
+    for case, label in zip(cases, oracle, strict=True):
+        assert case.case_id == label["case_id"]
+        assert RuntimeCase.from_benchmark({**case.model_dump(mode="json"), **label}) == case
+        assert label["verification_evidence"].startswith("tests/")
+        for raw in label["oracle_models"]:
+            model = RuntimeCase.model_validate(raw)
+            assert {cpt.node for cpt in model.visible_cpts} == set(case.graph_nodes)
+            for cpt in model.visible_cpts:
+                assert cpt.parents == tuple(sorted(cpt.parents))
+                assert all(0.1 <= probability <= 0.9 for probability in cpt.p_one.values())
+
+
+def test_ten_group_pilot_engine_answerability_and_hidden_export(tmp_path):
+    public = tmp_path / "pilot" / "cases.jsonl"
+    private = tmp_path / "oracle" / "labels.jsonl"
+    write_track_a_pilot(public, private)
+    cases = [RuntimeCase.model_validate_json(line) for line in public.read_text().splitlines()]
+    labels = [json.loads(line) for line in private.read_text().splitlines()]
+    assert len(cases) == len(labels) == 50
+    second_public = tmp_path / "pilot2" / "cases.jsonl"
+    second_private = tmp_path / "oracle2" / "labels.jsonl"
+    write_track_a_pilot(second_public, second_private)
+    assert public.read_bytes() == second_public.read_bytes()
+    assert private.read_bytes() == second_private.read_bytes()
+    for forbidden in (
+        "gold_answer",
+        "answerable",
+        "target_value",
+        "oracle_models",
+        "query",
+        "graph_family",
+    ):
+        assert forbidden not in public.read_text()
+    backend = CausalEngineBackend()
+    for case, label in zip(cases, labels, strict=True):
+        query = Query.model_validate(label["query"])
+        operation = (
+            "has_directed_path" if query.question_type == "reachability" else "compute_effect"
+        )
+        request = ToolRequest(
+            operation=operation, query=query, evidence_digest=case.evidence_digest()
+        )
+        result = backend.execute(request, case)
+        if not label["answerable"]:
+            assert result.value is None and result.error is not None
+        elif query.question_type == "reachability":
+            assert result.value is label["gold_answer"]
+        else:
+            assert result.error is None
+            assert result.value == pytest.approx(label["target_value"], abs=1e-12)
