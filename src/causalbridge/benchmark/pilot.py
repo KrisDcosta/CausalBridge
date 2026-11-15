@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 
 from causalbridge.benchmark.generator import generate_cpts, generate_dag
-from causalbridge.benchmark.witness import observational_marginal, validate_witness
+from causalbridge.benchmark.witness import validate_witness
 from causalbridge.schemas import CPT, Assumptions, JointDistribution, Query, RuntimeCase
 from causalbridge.tools.graph import has_path
 from causalbridge.tools.reference import intervention
@@ -109,7 +109,10 @@ def build_small_pilot() -> tuple[tuple[RuntimeCase, ...], tuple[dict, ...]]:
         ),
         **base,
     )
-    xy = observational_marginal(positive, ("X", "Y"))
+    xy = JointDistribution(
+        variables=("X", "Y"),
+        probabilities={key: 0.25 for key in ("00", "01", "10", "11")},
+    )
     sign_query = Query(cause="X", outcome="Y", question_type="effect_direction")
     validate_witness(positive, negative, None, sign_query)
     validate_witness(positive, negative, xy, sign_query)

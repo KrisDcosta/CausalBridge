@@ -18,6 +18,9 @@ def test_small_pilot_has_paired_questions_and_checked_labels():
     assert {case.graph_group_id for case in cases} == {"G001", "G002"}
     assert by_id["G001_sign_graph"].question == by_id["G001_sign_xy"].question
     assert by_id["G001_sign_xy"].question == by_id["G001_sign_complete"].question
+    assert by_id["G001_sign_xy"].visible_joint.probabilities == {
+        key: 0.25 for key in ("00", "01", "10", "11")
+    }
     assert by_id["G002_effect_graph"].question == by_id["G002_effect_complete"].question
     assert labels["G001_sign_graph"]["answerable"] is False
     assert labels["G001_sign_xy"]["answerable"] is False
