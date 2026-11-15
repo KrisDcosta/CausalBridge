@@ -134,3 +134,13 @@ not statistical validity or model performance.
 
 These external handoffs keep the overall Phase 4 gate open. Our available-component
 integration, baseline projection and provisional export are implemented locally.
+
+
+## PR review follow-up
+
+Confirmed and fixed the `e1c68b1` audit gap: failed-parent and checker-error S2
+records must carry `released_direction=null`. The exporter now refuses contradictory
+releases too. Four new regression controls rehash the journal/update the export,
+so rejection depends on semantics rather than stale hashes. Clean records still
+pass. Current full validation is 499 tests plus all repository checks. See the
+knowledge bank for reproduction and the refreshed native audit record.

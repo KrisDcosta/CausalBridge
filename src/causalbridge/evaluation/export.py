@@ -52,6 +52,23 @@ def analysis_rows(run: dict, releases: list[dict]) -> list[dict]:
         if release is None:
             raise ValueError("Missing S2 outcome for scheduled S1")
         check = release["check"]
+        released = release["released_direction"]
+        if not usable:
+            valid = (
+                check is None
+                and release["skip_reason"] == "parent_prediction_failed"
+                and released is None
+            )
+        elif check is None:
+            valid = release["skip_reason"] == "checker_error" and released is None
+        else:
+            valid = (
+                release["skip_reason"] is None
+                and (not check["release"] or check["status"] == "pass")
+                and released == (direction if check["release"] else None)
+            )
+        if not valid:
+            raise ValueError("Contradictory S2 outcome for saved parent")
         rows.append(
             base
             | dict(

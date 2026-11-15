@@ -204,14 +204,20 @@ def audit_native(root):
             if trace is None or trace["failure_stage"] is not None:
                 check(
                     release["check"] is None
-                    and release["skip_reason"] == "parent_prediction_failed",
+                    and release["skip_reason"] == "parent_prediction_failed"
+                    and release["released_direction"] is None,
                     "s2_failed_parent",
                     key,
                 )
                 continue
             checked, prediction = release["check"], trace["prediction"]
             if checked is None:
-                check(release["skip_reason"] == "checker_error", "s2_missing_check", key)
+                check(
+                    release["skip_reason"] == "checker_error"
+                    and release["released_direction"] is None,
+                    "s2_missing_check",
+                    key,
+                )
                 continue
             check(
                 checked["case_id"] == trace["evidence"]["case_id"]

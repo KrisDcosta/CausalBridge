@@ -216,3 +216,23 @@ rejected because the authenticated account has pull-only access. A fork under
 KrisDcosta was created/verified and the branch pushed there. Team origin remains
 unchanged. GitHub readback confirms OPEN, draft and mergeable; CI was not yet
 reported at creation. Local 495-test validation remains distinct from GitHub CI.
+
+## PR #6 review correction
+
+The review of `e1c68b1` correctly found that the native auditor permitted a non-null
+S2 direction on failed-parent and checker-error records when `check` was null.
+The runner generated these records correctly; detection of corrupted saved records
+and downstream export validation were incomplete.
+
+Reproduced before the fix with four red cases: generation, parsing, binding and
+checker errors. Each case starts from a passing clean run, injects a direction,
+rebuilds the journal hash chain and updates the S2 export. The auditor now requires
+null direction on both no-check branches; `analysis_rows` rejects contradictory
+S2 states rather than exporting a false answer. Clean failure/control records remain
+valid. The runner and production checker/release policy are unchanged.
+
+Validation after correction: 499 tests pass, lint/format, both Track A demos,
+real synthetic ANM handshake and package builds pass. Fresh native demo under
+`runs/kris-pr6-review-fix`: 24 initial calls, 12 S1 checks, zero new calls on resume;
+updated native audit report passes with zero findings. PR #6 is updated with this
+fix; merge is not assumed. Our earlier 495-test pass did not cover these corruptions.
