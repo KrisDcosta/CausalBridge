@@ -105,3 +105,10 @@ GitHub Actions runs the same checks on Python 3.12 and 3.13.
 Use a branch and open a pull request into `main`. See [contributing](CONTRIBUTING.md)
 for ownership and workflow, and [integration](docs/integration.md) for the shared
 interfaces. Runtime prompts and tools must never receive gold labels or withheld CPTs.
+
+## Project progress and Track B work
+
+See the [project knowledge bank](docs/knowledge/README.md) for evidence-linked
+progress, ownership, decisions and planned versus completed work. The local
+Track B Phase 1 contracts and fixtures are documented there; they do not yet
+constitute an integrated real-data experiment.

@@ -1,1 +1,1 @@
-"""Track B runtime contracts; ingestion and ANM are teammate-owned."""
+"""Track B evidence construction and direction prediction contracts."""

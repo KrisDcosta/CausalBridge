@@ -1,0 +1,25 @@
+{
+  "audit_version": "native-handshake-audit-v1",
+  "auditor_source_sha256": "64ed362e56e7cd026a87b8ff1e187c4944b465b1481d21f3e723eec21d77cf3e",
+  "input_files_sha256": {
+    "events.jsonl": "3d0ff0ad8f1345f94c9c0a83ebd4aad0c1dbd3ee3d299dc5dce5b7b1554caf75",
+    "exports/7409921faa2764e07075087de083b806cdd0d1a6602b023bf4d2534669bbc807-s2.json": "e998447dd543f0f88c4c4577ff0ebdfedc8030dc5ea891fbdce46ee30b79ad90",
+    "exports/7409921faa2764e07075087de083b806cdd0d1a6602b023bf4d2534669bbc807.json": "22c0fa616ede13d4bef98c73b513dd5c3b5a91fad8c60c011aca30aa9470815d",
+    "invocations/6b67f89655cf4a1891db30e16a9f1c52.json": "22c0fa616ede13d4bef98c73b513dd5c3b5a91fad8c60c011aca30aa9470815d",
+    "invocations/9b1f4427cb214f97a04cf7d413253f85.json": "cf146043924179b7ec45d63b9cefa39a3176241f5e7d7f67010225125a438921",
+    "manifests/7409921faa2764e07075087de083b806cdd0d1a6602b023bf4d2534669bbc807.json": "c31cfb33d8f8e4104266cdbd97848a83c52eb2496577360df2a894238797fce7"
+  },
+  "passed": true,
+  "findings": [],
+  "counts": {
+    "native_started": 24,
+    "native_generated": 24,
+    "native_finished": 24,
+    "native_released": 12
+  },
+  "limitations": [
+    "Synthetic observations and scripted model transport; no accuracy claim.",
+    "Checks durable method request/result binding, not statistical validity.",
+    "Real source-family eligibility and scorer consumption are pending."
+  ]
+}

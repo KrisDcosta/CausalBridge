@@ -1,0 +1,563 @@
+{
+  "notice": "Illustrative contracts only: no model, ANM or production checker was run.",
+  "prompt_version": "direction-v1",
+  "runtime_input": {
+    "case_id": "D0001",
+    "variables": [
+      {
+        "name": "Synthetic input",
+        "unit": "m"
+      },
+      {
+        "name": "Synthetic response",
+        "unit": "s"
+      }
+    ],
+    "rows": [
+      [
+        1.0,
+        2.0
+      ],
+      [
+        3.0,
+        6.0
+      ],
+      [
+        5.0,
+        4.0
+      ],
+      [
+        7.0,
+        8.0
+      ]
+    ]
+  },
+  "private_selection_do_not_prompt": {
+    "version": "selection-v1",
+    "case_id": "D0001",
+    "source_digest": "ca0cdf0362c945ec363553fff15978865597dc18fd672e6f9c4f6438b52c93f3",
+    "spec": {
+      "method_limit": 256,
+      "display_limit": 64,
+      "mapping_seed": 261,
+      "sample_seed": 262,
+      "display_seed": 263
+    },
+    "column_order": [
+      0,
+      1
+    ],
+    "method_indices": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "display_indices": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  "packages": [
+    {
+      "payload": {
+        "schema_version": "track-b-v1",
+        "task": "causal_direction",
+        "case_id": "D0001",
+        "package": "E1",
+        "question": "Which direction is more plausible, A -> B or B -> A? You may abstain.",
+        "context": [
+          {
+            "name": "Synthetic input",
+            "unit": "m"
+          },
+          {
+            "name": "Synthetic response",
+            "unit": "s"
+          }
+        ],
+        "display_rows": [],
+        "summary": null,
+        "method": null,
+        "evidence_ids": [
+          "context:A",
+          "context:B"
+        ]
+      },
+      "evidence_digest": "7443899a5116af5db953939f16a8f123511c6cbfc77deda94fd44b8402d88a98",
+      "display_sample_digest": null,
+      "method_sample_digest": null
+    },
+    {
+      "payload": {
+        "schema_version": "track-b-v1",
+        "task": "causal_direction",
+        "case_id": "D0001",
+        "package": "E2",
+        "question": "Which direction is more plausible, A -> B or B -> A? You may abstain.",
+        "context": null,
+        "display_rows": [
+          {
+            "evidence_id": "rows:r0001",
+            "values": [
+              1.0,
+              2.0
+            ]
+          },
+          {
+            "evidence_id": "rows:r0002",
+            "values": [
+              3.0,
+              6.0
+            ]
+          },
+          {
+            "evidence_id": "rows:r0003",
+            "values": [
+              5.0,
+              4.0
+            ]
+          },
+          {
+            "evidence_id": "rows:r0004",
+            "values": [
+              7.0,
+              8.0
+            ]
+          }
+        ],
+        "summary": [
+          {
+            "n": 4,
+            "minimum": 1.0,
+            "maximum": 7.0,
+            "mean": 4.0,
+            "population_std": 2.23606797749979
+          },
+          {
+            "n": 4,
+            "minimum": 2.0,
+            "maximum": 8.0,
+            "mean": 5.0,
+            "population_std": 2.23606797749979
+          }
+        ],
+        "method": null,
+        "evidence_ids": [
+          "rows:r0001",
+          "rows:r0002",
+          "rows:r0003",
+          "rows:r0004",
+          "summary:A",
+          "summary:B"
+        ]
+      },
+      "evidence_digest": "3529bd718d8ea6d5dab42083c0b63d76b3b155303f6701bdade28191a86a414e",
+      "display_sample_digest": "77c1cf5e5eb98b642742b7a99de8497ffeddc74adb74f99e635d6d2cffb5c794",
+      "method_sample_digest": null
+    },
+    {
+      "payload": {
+        "schema_version": "track-b-v1",
+        "task": "causal_direction",
+        "case_id": "D0001",
+        "package": "E3",
+        "question": "Which direction is more plausible, A -> B or B -> A? You may abstain.",
+        "context": [
+          {
+            "name": "Synthetic input",
+            "unit": "m"
+          },
+          {
+            "name": "Synthetic response",
+            "unit": "s"
+          }
+        ],
+        "display_rows": [
+          {
+            "evidence_id": "rows:r0001",
+            "values": [
+              1.0,
+              2.0
+            ]
+          },
+          {
+            "evidence_id": "rows:r0002",
+            "values": [
+              3.0,
+              6.0
+            ]
+          },
+          {
+            "evidence_id": "rows:r0003",
+            "values": [
+              5.0,
+              4.0
+            ]
+          },
+          {
+            "evidence_id": "rows:r0004",
+            "values": [
+              7.0,
+              8.0
+            ]
+          }
+        ],
+        "summary": [
+          {
+            "n": 4,
+            "minimum": 1.0,
+            "maximum": 7.0,
+            "mean": 4.0,
+            "population_std": 2.23606797749979
+          },
+          {
+            "n": 4,
+            "minimum": 2.0,
+            "maximum": 8.0,
+            "mean": 5.0,
+            "population_std": 2.23606797749979
+          }
+        ],
+        "method": null,
+        "evidence_ids": [
+          "context:A",
+          "context:B",
+          "rows:r0001",
+          "rows:r0002",
+          "rows:r0003",
+          "rows:r0004",
+          "summary:A",
+          "summary:B"
+        ]
+      },
+      "evidence_digest": "fc0e36e53f9b83039cb66218d7f10da5f1aa5747536e52671a9561e60676c745",
+      "display_sample_digest": "77c1cf5e5eb98b642742b7a99de8497ffeddc74adb74f99e635d6d2cffb5c794",
+      "method_sample_digest": null
+    },
+    {
+      "payload": {
+        "schema_version": "track-b-v1",
+        "task": "causal_direction",
+        "case_id": "D0001",
+        "package": "E4",
+        "question": "Which direction is more plausible, A -> B or B -> A? You may abstain.",
+        "context": [
+          {
+            "name": "Synthetic input",
+            "unit": "m"
+          },
+          {
+            "name": "Synthetic response",
+            "unit": "s"
+          }
+        ],
+        "display_rows": [
+          {
+            "evidence_id": "rows:r0001",
+            "values": [
+              1.0,
+              2.0
+            ]
+          },
+          {
+            "evidence_id": "rows:r0002",
+            "values": [
+              3.0,
+              6.0
+            ]
+          },
+          {
+            "evidence_id": "rows:r0003",
+            "values": [
+              5.0,
+              4.0
+            ]
+          },
+          {
+            "evidence_id": "rows:r0004",
+            "values": [
+              7.0,
+              8.0
+            ]
+          }
+        ],
+        "summary": [
+          {
+            "n": 4,
+            "minimum": 1.0,
+            "maximum": 7.0,
+            "mean": 4.0,
+            "population_std": 2.23606797749979
+          },
+          {
+            "n": 4,
+            "minimum": 2.0,
+            "maximum": 8.0,
+            "mean": 5.0,
+            "population_std": 2.23606797749979
+          }
+        ],
+        "method": {
+          "evidence_id": "method:anm:v1",
+          "method_version": "scripted-fixture-v1",
+          "sample_digest": "77c1cf5e5eb98b642742b7a99de8497ffeddc74adb74f99e635d6d2cffb5c794",
+          "config_digest": "ffbc2dfc402782325da71132100e74ff511d1585dd80e4ea196ed4bcace3fef2",
+          "n_selected": 4,
+          "status": "ok",
+          "score_ab": 0.1,
+          "score_ba": 0.3,
+          "margin": 0.2,
+          "threshold": 0.05,
+          "threshold_version": "fixture-only",
+          "predicted_direction": "A_to_B",
+          "reason_code": "scripted_preference",
+          "limitations": [
+            "Scripted contract fixture; no ANM calculation was performed.",
+            "Observational evidence cannot rule out hidden confounding or feedback."
+          ]
+        },
+        "evidence_ids": [
+          "context:A",
+          "context:B",
+          "rows:r0001",
+          "rows:r0002",
+          "rows:r0003",
+          "rows:r0004",
+          "summary:A",
+          "summary:B",
+          "method:anm:v1"
+        ]
+      },
+      "evidence_digest": "7a66266564dd2d24e555a1212d2c14b7596c1f580d113f23f482643549cfce9a",
+      "display_sample_digest": "77c1cf5e5eb98b642742b7a99de8497ffeddc74adb74f99e635d6d2cffb5c794",
+      "method_sample_digest": "77c1cf5e5eb98b642742b7a99de8497ffeddc74adb74f99e635d6d2cffb5c794"
+    }
+  ],
+  "prompts": {
+    "E1": {
+      "S0": [
+        {
+          "role": "system",
+          "content": "Assess which direction is more plausible between A and B using the supplied evidence. Return one JSON object matching the supplied schema. You may answer A_to_B or B_to_A, or abstain with a null direction. Cite evidence using only IDs in evidence_ids. method_attribution describes the diagnostic's direction, abstain, or unavailable; use null if you do not discuss it. claim_scope describes your claim, not correctness. These observational inputs and any ANM diagnostic do not establish causal proof. Unknown confounding and feedback may remain. Give a short explanation."
+        },
+        {
+          "role": "user",
+          "content": "{\"case_id\":\"D0001\",\"context\":[{\"name\":\"Synthetic input\",\"unit\":\"m\"},{\"name\":\"Synthetic response\",\"unit\":\"s\"}],\"display_rows\":[],\"evidence_ids\":[\"context:A\",\"context:B\"],\"package\":\"E1\",\"question\":\"Which direction is more plausible, A -> B or B -> A? You may abstain.\",\"schema_version\":\"track-b-v1\",\"task\":\"causal_direction\"}"
+        }
+      ],
+      "S1": [
+        {
+          "role": "system",
+          "content": "Assess which direction is more plausible between A and B using the supplied evidence. Return one JSON object matching the supplied schema. You may answer A_to_B or B_to_A, or abstain with a null direction. Cite evidence using only IDs in evidence_ids. method_attribution describes the diagnostic's direction, abstain, or unavailable; use null if you do not discuss it. claim_scope describes your claim, not correctness. These observational inputs and any ANM diagnostic do not establish causal proof. Unknown confounding and feedback may remain. Give a short explanation.\nCarefully distinguish observed patterns, background knowledge and method evidence. Do not invent evidence or overstate what it establishes. Explicitly acknowledge material uncertainty and abstain when you cannot support a directional preference."
+        },
+        {
+          "role": "user",
+          "content": "{\"case_id\":\"D0001\",\"context\":[{\"name\":\"Synthetic input\",\"unit\":\"m\"},{\"name\":\"Synthetic response\",\"unit\":\"s\"}],\"display_rows\":[],\"evidence_ids\":[\"context:A\",\"context:B\"],\"package\":\"E1\",\"question\":\"Which direction is more plausible, A -> B or B -> A? You may abstain.\",\"schema_version\":\"track-b-v1\",\"task\":\"causal_direction\"}"
+        }
+      ]
+    },
+    "E2": {
+      "S0": [
+        {
+          "role": "system",
+          "content": "Assess which direction is more plausible between A and B using the supplied evidence. Return one JSON object matching the supplied schema. You may answer A_to_B or B_to_A, or abstain with a null direction. Cite evidence using only IDs in evidence_ids. method_attribution describes the diagnostic's direction, abstain, or unavailable; use null if you do not discuss it. claim_scope describes your claim, not correctness. These observational inputs and any ANM diagnostic do not establish causal proof. Unknown confounding and feedback may remain. Give a short explanation."
+        },
+        {
+          "role": "user",
+          "content": "{\"case_id\":\"D0001\",\"display_rows\":[{\"evidence_id\":\"rows:r0001\",\"values\":[1.0,2.0]},{\"evidence_id\":\"rows:r0002\",\"values\":[3.0,6.0]},{\"evidence_id\":\"rows:r0003\",\"values\":[5.0,4.0]},{\"evidence_id\":\"rows:r0004\",\"values\":[7.0,8.0]}],\"evidence_ids\":[\"rows:r0001\",\"rows:r0002\",\"rows:r0003\",\"rows:r0004\",\"summary:A\",\"summary:B\"],\"package\":\"E2\",\"question\":\"Which direction is more plausible, A -> B or B -> A? You may abstain.\",\"schema_version\":\"track-b-v1\",\"summary\":[{\"maximum\":7.0,\"mean\":4.0,\"minimum\":1.0,\"n\":4,\"population_std\":2.23606797749979},{\"maximum\":8.0,\"mean\":5.0,\"minimum\":2.0,\"n\":4,\"population_std\":2.23606797749979}],\"task\":\"causal_direction\"}"
+        }
+      ],
+      "S1": [
+        {
+          "role": "system",
+          "content": "Assess which direction is more plausible between A and B using the supplied evidence. Return one JSON object matching the supplied schema. You may answer A_to_B or B_to_A, or abstain with a null direction. Cite evidence using only IDs in evidence_ids. method_attribution describes the diagnostic's direction, abstain, or unavailable; use null if you do not discuss it. claim_scope describes your claim, not correctness. These observational inputs and any ANM diagnostic do not establish causal proof. Unknown confounding and feedback may remain. Give a short explanation.\nCarefully distinguish observed patterns, background knowledge and method evidence. Do not invent evidence or overstate what it establishes. Explicitly acknowledge material uncertainty and abstain when you cannot support a directional preference."
+        },
+        {
+          "role": "user",
+          "content": "{\"case_id\":\"D0001\",\"display_rows\":[{\"evidence_id\":\"rows:r0001\",\"values\":[1.0,2.0]},{\"evidence_id\":\"rows:r0002\",\"values\":[3.0,6.0]},{\"evidence_id\":\"rows:r0003\",\"values\":[5.0,4.0]},{\"evidence_id\":\"rows:r0004\",\"values\":[7.0,8.0]}],\"evidence_ids\":[\"rows:r0001\",\"rows:r0002\",\"rows:r0003\",\"rows:r0004\",\"summary:A\",\"summary:B\"],\"package\":\"E2\",\"question\":\"Which direction is more plausible, A -> B or B -> A? You may abstain.\",\"schema_version\":\"track-b-v1\",\"summary\":[{\"maximum\":7.0,\"mean\":4.0,\"minimum\":1.0,\"n\":4,\"population_std\":2.23606797749979},{\"maximum\":8.0,\"mean\":5.0,\"minimum\":2.0,\"n\":4,\"population_std\":2.23606797749979}],\"task\":\"causal_direction\"}"
+        }
+      ]
+    },
+    "E3": {
+      "S0": [
+        {
+          "role": "system",
+          "content": "Assess which direction is more plausible between A and B using the supplied evidence. Return one JSON object matching the supplied schema. You may answer A_to_B or B_to_A, or abstain with a null direction. Cite evidence using only IDs in evidence_ids. method_attribution describes the diagnostic's direction, abstain, or unavailable; use null if you do not discuss it. claim_scope describes your claim, not correctness. These observational inputs and any ANM diagnostic do not establish causal proof. Unknown confounding and feedback may remain. Give a short explanation."
+        },
+        {
+          "role": "user",
+          "content": "{\"case_id\":\"D0001\",\"context\":[{\"name\":\"Synthetic input\",\"unit\":\"m\"},{\"name\":\"Synthetic response\",\"unit\":\"s\"}],\"display_rows\":[{\"evidence_id\":\"rows:r0001\",\"values\":[1.0,2.0]},{\"evidence_id\":\"rows:r0002\",\"values\":[3.0,6.0]},{\"evidence_id\":\"rows:r0003\",\"values\":[5.0,4.0]},{\"evidence_id\":\"rows:r0004\",\"values\":[7.0,8.0]}],\"evidence_ids\":[\"context:A\",\"context:B\",\"rows:r0001\",\"rows:r0002\",\"rows:r0003\",\"rows:r0004\",\"summary:A\",\"summary:B\"],\"package\":\"E3\",\"question\":\"Which direction is more plausible, A -> B or B -> A? You may abstain.\",\"schema_version\":\"track-b-v1\",\"summary\":[{\"maximum\":7.0,\"mean\":4.0,\"minimum\":1.0,\"n\":4,\"population_std\":2.23606797749979},{\"maximum\":8.0,\"mean\":5.0,\"minimum\":2.0,\"n\":4,\"population_std\":2.23606797749979}],\"task\":\"causal_direction\"}"
+        }
+      ],
+      "S1": [
+        {
+          "role": "system",
+          "content": "Assess which direction is more plausible between A and B using the supplied evidence. Return one JSON object matching the supplied schema. You may answer A_to_B or B_to_A, or abstain with a null direction. Cite evidence using only IDs in evidence_ids. method_attribution describes the diagnostic's direction, abstain, or unavailable; use null if you do not discuss it. claim_scope describes your claim, not correctness. These observational inputs and any ANM diagnostic do not establish causal proof. Unknown confounding and feedback may remain. Give a short explanation.\nCarefully distinguish observed patterns, background knowledge and method evidence. Do not invent evidence or overstate what it establishes. Explicitly acknowledge material uncertainty and abstain when you cannot support a directional preference."
+        },
+        {
+          "role": "user",
+          "content": "{\"case_id\":\"D0001\",\"context\":[{\"name\":\"Synthetic input\",\"unit\":\"m\"},{\"name\":\"Synthetic response\",\"unit\":\"s\"}],\"display_rows\":[{\"evidence_id\":\"rows:r0001\",\"values\":[1.0,2.0]},{\"evidence_id\":\"rows:r0002\",\"values\":[3.0,6.0]},{\"evidence_id\":\"rows:r0003\",\"values\":[5.0,4.0]},{\"evidence_id\":\"rows:r0004\",\"values\":[7.0,8.0]}],\"evidence_ids\":[\"context:A\",\"context:B\",\"rows:r0001\",\"rows:r0002\",\"rows:r0003\",\"rows:r0004\",\"summary:A\",\"summary:B\"],\"package\":\"E3\",\"question\":\"Which direction is more plausible, A -> B or B -> A? You may abstain.\",\"schema_version\":\"track-b-v1\",\"summary\":[{\"maximum\":7.0,\"mean\":4.0,\"minimum\":1.0,\"n\":4,\"population_std\":2.23606797749979},{\"maximum\":8.0,\"mean\":5.0,\"minimum\":2.0,\"n\":4,\"population_std\":2.23606797749979}],\"task\":\"causal_direction\"}"
+        }
+      ]
+    },
+    "E4": {
+      "S0": [
+        {
+          "role": "system",
+          "content": "Assess which direction is more plausible between A and B using the supplied evidence. Return one JSON object matching the supplied schema. You may answer A_to_B or B_to_A, or abstain with a null direction. Cite evidence using only IDs in evidence_ids. method_attribution describes the diagnostic's direction, abstain, or unavailable; use null if you do not discuss it. claim_scope describes your claim, not correctness. These observational inputs and any ANM diagnostic do not establish causal proof. Unknown confounding and feedback may remain. Give a short explanation."
+        },
+        {
+          "role": "user",
+          "content": "{\"case_id\":\"D0001\",\"context\":[{\"name\":\"Synthetic input\",\"unit\":\"m\"},{\"name\":\"Synthetic response\",\"unit\":\"s\"}],\"display_rows\":[{\"evidence_id\":\"rows:r0001\",\"values\":[1.0,2.0]},{\"evidence_id\":\"rows:r0002\",\"values\":[3.0,6.0]},{\"evidence_id\":\"rows:r0003\",\"values\":[5.0,4.0]},{\"evidence_id\":\"rows:r0004\",\"values\":[7.0,8.0]}],\"evidence_ids\":[\"context:A\",\"context:B\",\"rows:r0001\",\"rows:r0002\",\"rows:r0003\",\"rows:r0004\",\"summary:A\",\"summary:B\",\"method:anm:v1\"],\"method\":{\"config_digest\":\"ffbc2dfc402782325da71132100e74ff511d1585dd80e4ea196ed4bcace3fef2\",\"evidence_id\":\"method:anm:v1\",\"limitations\":[\"Scripted contract fixture; no ANM calculation was performed.\",\"Observational evidence cannot rule out hidden confounding or feedback.\"],\"margin\":0.2,\"method_version\":\"scripted-fixture-v1\",\"n_selected\":4,\"predicted_direction\":\"A_to_B\",\"reason_code\":\"scripted_preference\",\"sample_digest\":\"77c1cf5e5eb98b642742b7a99de8497ffeddc74adb74f99e635d6d2cffb5c794\",\"score_ab\":0.1,\"score_ba\":0.3,\"status\":\"ok\",\"threshold\":0.05,\"threshold_version\":\"fixture-only\"},\"package\":\"E4\",\"question\":\"Which direction is more plausible, A -> B or B -> A? You may abstain.\",\"schema_version\":\"track-b-v1\",\"summary\":[{\"maximum\":7.0,\"mean\":4.0,\"minimum\":1.0,\"n\":4,\"population_std\":2.23606797749979},{\"maximum\":8.0,\"mean\":5.0,\"minimum\":2.0,\"n\":4,\"population_std\":2.23606797749979}],\"task\":\"causal_direction\"}"
+        }
+      ],
+      "S1": [
+        {
+          "role": "system",
+          "content": "Assess which direction is more plausible between A and B using the supplied evidence. Return one JSON object matching the supplied schema. You may answer A_to_B or B_to_A, or abstain with a null direction. Cite evidence using only IDs in evidence_ids. method_attribution describes the diagnostic's direction, abstain, or unavailable; use null if you do not discuss it. claim_scope describes your claim, not correctness. These observational inputs and any ANM diagnostic do not establish causal proof. Unknown confounding and feedback may remain. Give a short explanation.\nCarefully distinguish observed patterns, background knowledge and method evidence. Do not invent evidence or overstate what it establishes. Explicitly acknowledge material uncertainty and abstain when you cannot support a directional preference."
+        },
+        {
+          "role": "user",
+          "content": "{\"case_id\":\"D0001\",\"context\":[{\"name\":\"Synthetic input\",\"unit\":\"m\"},{\"name\":\"Synthetic response\",\"unit\":\"s\"}],\"display_rows\":[{\"evidence_id\":\"rows:r0001\",\"values\":[1.0,2.0]},{\"evidence_id\":\"rows:r0002\",\"values\":[3.0,6.0]},{\"evidence_id\":\"rows:r0003\",\"values\":[5.0,4.0]},{\"evidence_id\":\"rows:r0004\",\"values\":[7.0,8.0]}],\"evidence_ids\":[\"context:A\",\"context:B\",\"rows:r0001\",\"rows:r0002\",\"rows:r0003\",\"rows:r0004\",\"summary:A\",\"summary:B\",\"method:anm:v1\"],\"method\":{\"config_digest\":\"ffbc2dfc402782325da71132100e74ff511d1585dd80e4ea196ed4bcace3fef2\",\"evidence_id\":\"method:anm:v1\",\"limitations\":[\"Scripted contract fixture; no ANM calculation was performed.\",\"Observational evidence cannot rule out hidden confounding or feedback.\"],\"margin\":0.2,\"method_version\":\"scripted-fixture-v1\",\"n_selected\":4,\"predicted_direction\":\"A_to_B\",\"reason_code\":\"scripted_preference\",\"sample_digest\":\"77c1cf5e5eb98b642742b7a99de8497ffeddc74adb74f99e635d6d2cffb5c794\",\"score_ab\":0.1,\"score_ba\":0.3,\"status\":\"ok\",\"threshold\":0.05,\"threshold_version\":\"fixture-only\"},\"package\":\"E4\",\"question\":\"Which direction is more plausible, A -> B or B -> A? You may abstain.\",\"schema_version\":\"track-b-v1\",\"summary\":[{\"maximum\":7.0,\"mean\":4.0,\"minimum\":1.0,\"n\":4,\"population_std\":2.23606797749979},{\"maximum\":8.0,\"mean\":5.0,\"minimum\":2.0,\"n\":4,\"population_std\":2.23606797749979}],\"task\":\"causal_direction\"}"
+        }
+      ]
+    }
+  },
+  "output_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "response_action": {
+        "enum": [
+          "answer",
+          "abstain"
+        ],
+        "title": "Response Action",
+        "type": "string"
+      },
+      "predicted_direction": {
+        "anyOf": [
+          {
+            "enum": [
+              "A_to_B",
+              "B_to_A"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Predicted Direction"
+      },
+      "evidence_refs": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Evidence Refs",
+        "type": "array"
+      },
+      "method_attribution": {
+        "anyOf": [
+          {
+            "enum": [
+              "A_to_B",
+              "B_to_A",
+              "abstain",
+              "unavailable"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Method Attribution"
+      },
+      "claim_scope": {
+        "enum": [
+          "plausible_direction",
+          "causal_proof"
+        ],
+        "title": "Claim Scope",
+        "type": "string"
+      },
+      "explanation": {
+        "maxLength": 2000,
+        "minLength": 1,
+        "title": "Explanation",
+        "type": "string"
+      }
+    },
+    "required": [
+      "response_action",
+      "predicted_direction",
+      "evidence_refs",
+      "method_attribution",
+      "claim_scope",
+      "explanation"
+    ],
+    "title": "DirectionProposal",
+    "type": "object"
+  },
+  "answer_attempt": {
+    "schema_version": "track-b-v1",
+    "attempt_id": "fixture-s1-answer",
+    "evidence_digest": "7a66266564dd2d24e555a1212d2c14b7596c1f580d113f23f482643549cfce9a",
+    "condition": "S1",
+    "status": "parsed",
+    "raw_text": "{\"response_action\":\"answer\",\"predicted_direction\":\"A_to_B\",\"evidence_refs\":[\"method:anm:v1\"],\"method_attribution\":\"A_to_B\",\"claim_scope\":\"plausible_direction\",\"explanation\":\"Fixture preference, not causal proof.\"}",
+    "proposal": {
+      "response_action": "answer",
+      "predicted_direction": "A_to_B",
+      "evidence_refs": [
+        "method:anm:v1"
+      ],
+      "method_attribution": "A_to_B",
+      "claim_scope": "plausible_direction",
+      "explanation": "Fixture preference, not causal proof."
+    },
+    "failure_code": null,
+    "model": "scripted-fixture",
+    "model_mode": "scripted_fixture",
+    "input_tokens": null,
+    "output_tokens": null
+  },
+  "abstention_proposal": {
+    "response_action": "abstain",
+    "predicted_direction": null,
+    "evidence_refs": [
+      "method:anm:v1"
+    ],
+    "method_attribution": "A_to_B",
+    "claim_scope": "plausible_direction",
+    "explanation": "Fixture uncertainty warrants abstention."
+  },
+  "failed_attempt": {
+    "schema_version": "track-b-v1",
+    "attempt_id": "fixture-s1-failed",
+    "evidence_digest": "7a66266564dd2d24e555a1212d2c14b7596c1f580d113f23f482643549cfce9a",
+    "condition": "S1",
+    "status": "parse_error",
+    "raw_text": "not JSON",
+    "proposal": null,
+    "failure_code": "structured_output_error",
+    "model": "scripted-fixture",
+    "model_mode": "scripted_fixture",
+    "input_tokens": null,
+    "output_tokens": null
+  },
+  "illustrative_release": {
+    "parent_attempt_id": "fixture-s1-answer",
+    "parent_attempt_digest": "cf129c6058de6d85b8e0e768954277a17acbc514724555946099d45710e4ce89",
+    "checker_version": "scripted-example-only",
+    "process_status": "passed",
+    "response_action": "answer",
+    "released_direction": "A_to_B",
+    "reason_codes": [
+      "scripted_pass"
+    ]
+  }
+}

@@ -41,20 +41,11 @@ class PredictionExecution(Record):
     latency_seconds: float = Field(ge=0)
 
 
-def predict_direction(
-    evidence: DirectionEvidence,
-    prompt_condition: PromptCondition,
-    model_client: JSONModel,
-) -> PredictionExecution:
-    """Generate once; never call ANM, score labels, retry, or choose a condition.
-
-    Parsed but misbound predictions remain in the trace with failure_stage=binding.
-    Callers must check failure_stage before using a prediction.
-    """
-    started = perf_counter()
-    evidence = DirectionEvidence.model_validate_json(evidence.model_dump_json())
-    prompt_condition = PromptCondition.model_validate_json(prompt_condition.model_dump_json())
-    prompt = messages(
+def direction_messages(
+    evidence: DirectionEvidence, prompt_condition: PromptCondition
+) -> list[dict[str, str]]:
+    """Pure rendering hook for runner cache keys; identical to predictor messages."""
+    return messages(
         prompt_condition.instructions + "\nReturn JSON only matching the supplied schema. "
         "Use A_to_B, B_to_A or null with abstained=true and a reason. Copy the supplied "
         "case_id and package_digest. Scores and margins are diagnostics, not calibrated causal "
@@ -68,6 +59,22 @@ def predict_direction(
             display_sample_digest=evidence.display_sample_digest,
         ),
     )
+
+
+def predict_direction(
+    evidence: DirectionEvidence,
+    prompt_condition: PromptCondition,
+    model_client: JSONModel,
+) -> PredictionExecution:
+    """Generate once; never call ANM, score labels, retry, or choose a condition.
+
+    Parsed but misbound predictions remain in the trace with failure_stage=binding.
+    Callers must check failure_stage before using a prediction.
+    """
+    started = perf_counter()
+    evidence = DirectionEvidence.model_validate_json(evidence.model_dump_json())
+    prompt_condition = PromptCondition.model_validate_json(prompt_condition.model_dump_json())
+    prompt = direction_messages(evidence, prompt_condition)
     schema = DirectionPrediction.model_json_schema()
     # Keep the exact request for audit even if a custom transport mutates its arguments.
     saved_prompt = tuple(dict(m) for m in prompt)
