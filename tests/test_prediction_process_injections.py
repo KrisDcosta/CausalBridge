@@ -121,3 +121,19 @@ def test_injected_missing_cached_method(bound_direction):
     e = e.model_copy(update={"method_result": None})
     result = check_prediction(e, p, context=context)
     assert result.status == "fail" and result.reason_codes == ("invalid_evidence",)
+
+
+@pytest.mark.parametrize("invalid_id", [None, 42, [], {}, ""])
+def test_injected_invalid_case_id_returns_failure_instead_of_crashing(bound_direction, invalid_id):
+    from causalbridge.discovery.schemas import canonical_digest
+
+    e, p, context = bound_direction()
+    malformed = e.model_copy(update={"case_id": invalid_id})
+    result = check_prediction(malformed, p, context=context)
+    assert result.status == "fail" and not result.release
+    assert result.reason_codes == ("invalid_evidence",)
+    assert result.case_id == "<invalid_case_id>"
+    assert result.package_digest == canonical_digest(
+        malformed.model_dump(mode="json", warnings=False)
+    )
+    assert result.proposal_digest == p.proposal_digest

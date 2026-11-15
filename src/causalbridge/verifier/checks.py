@@ -57,10 +57,15 @@ def check_prediction(
     raw_prediction = _payload(saved_prediction)
     package_digest = canonical_digest(raw_evidence)
     proposal_digest = canonical_digest(raw_prediction)
+    # Even the rejection path needs a valid diagnostic identity. Never coerce
+    # an invalid ID into a real case ID or borrow one from another record.
+    case_id = raw_evidence.get("case_id")
+    if not isinstance(case_id, str) or not case_id:
+        case_id = "<invalid_case_id>"
 
     def finish(status, codes, findings=()):
         return PredictionCheck(
-            case_id=evidence.case_id,
+            case_id=case_id,
             package_digest=package_digest,
             proposal_digest=proposal_digest,
             status=status,
