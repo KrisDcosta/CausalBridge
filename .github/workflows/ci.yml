@@ -13,9 +13,11 @@ jobs:
       - uses: astral-sh/setup-uv@v6
         with:
           version: "0.9.5"
-      - run: uv sync --frozen --dev --python ${{ matrix.python }}
-      - run: uv run ruff check .
-      - run: uv run ruff format --check .
-      - run: uv run pytest --cov=causalbridge --cov-report=term-missing
-      - run: uv run causalbridge demo --output runs/ci-demo.jsonl
+      - run: uv sync --frozen --dev --extra anm --python ${{ matrix.python }}
+      - run: uv run --extra anm ruff check .
+      - run: uv run --extra anm ruff format --check .
+      - run: uv run --extra anm pytest --cov=causalbridge --cov-report=term-missing
+      - run: uv run --extra anm causalbridge demo --output runs/ci-demo.jsonl
+      - run: uv run --extra anm causalbridge demo --backend engine --output runs/ci-engine-demo.jsonl
+      - run: uv run --extra anm python examples/anm_integration.py --output runs/ci-anm-handshake
       - run: uv build

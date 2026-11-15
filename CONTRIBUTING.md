@@ -5,7 +5,8 @@
 | Area | Owner | Location |
 | --- | --- | --- |
 | Benchmark and witness validation | Arunima | `src/causalbridge/benchmark/` |
-| Graph and numerical engine | Anish | `src/causalbridge/tools/` |
+| Structural graph helpers and witnesses | Arunima | `src/causalbridge/tools/graph.py`, `benchmark/` |
+| Numerical engine, summaries and ANM original requests/results | Anish | `src/causalbridge/tools/inference.py`, `tools/engine.py`, `discovery/anm*.py`, `discovery/statistics.py` |
 | LLM orchestration and verifier | Vaishak | `src/causalbridge/llm/`, `verifier/`, `pipeline.py` |
 | Baselines and experiment runner | Kris | `src/causalbridge/evaluation/` |
 | Metrics, uncertainty and audits | Faizah | `src/causalbridge/evaluation/` |

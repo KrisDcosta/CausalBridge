@@ -5,8 +5,10 @@ graph and evidence. A directed path from X to Y doesn't tell us whether increasi
 X increases Y. The system checks the selected operation, its evidence requirements,
 and the proposed conclusion before answering or abstaining.
 
-Parsing, orchestration and verification are implemented with a reference tool
-backend. Benchmark generation, the full engine, baselines and evaluation are pending.
+Track A has graph tools, a seven-case pilot, a selectable numerical engine and
+an independently checked witness. Track B has Vaishak's predictor/checker and an
+ANM producer that saves its original request before fitting. Real-data packaging,
+the experiment runner/scorer and live-model research evaluation remain pending.
 
 ## Setup
 
@@ -15,10 +17,36 @@ Use Python 3.12 and [uv](https://docs.astral.sh/uv/getting-started/installation/
 ```bash
 uv sync --frozen --dev
 uv run causalbridge demo --output runs/demo.jsonl
+uv run causalbridge demo --backend engine --output runs/engine-demo.jsonl
 ```
 
 The demo uses 8 scripted cases. It runs offline and doesn't measure model performance.
 Use `--overwrite` to replace an existing output file.
+`demo` and `run` accept `--backend engine`; the default remains `reference`.
+
+## ANM diagnostic and original request
+
+```bash
+uv sync --frozen --dev --extra anm
+uv run --extra anm python examples/anm_integration.py --output runs/anm-handshake
+```
+
+Use a new output directory per attempt. This example computes ANM on synthetic
+rows and connects saved artifacts to the existing predictor/checker with scripted
+S1 output. It does not load Tuebingen labels or run a live LLM.
+
+For caller-supplied numeric rows:
+
+```bash
+uv run --extra anm causalbridge anm-run \
+  --input pair.json --config anm-config.json --output runs/anm-pair-001
+```
+
+Input JSON contains only `case_id`, `ab_mapping_id` and ordered numeric `rows`.
+The default threshold is unconfigured; it returns scores without a direction.
+`request.json` is saved independently before execution and is the original
+`ANMRequestBinding` that the verifier needs. See [producer/API handoff](docs/anm_producer.md)
+and [authoritative integration contract](docs/track_b_integration_contract.md).
 
 ## Run with a model
 
@@ -46,7 +74,8 @@ Model settings are in `configs/model.json`. Live Qwen inference still needs vali
 ```text
 src/causalbridge/
   benchmark/       # Arunima: models, evidence pairs and witnesses
-  tools/           # Anish: graph and numerical operations
+  tools/           # Structural graph helpers and Anish's numerical engine
+  discovery/       # Direction schemas, ANM request storage, statistics and diagnostic
   llm/             # Vaishak: parsing and tool planning
   verifier/        # Vaishak: evidence and conclusion checks
   evaluation/      # Kris and Faizah: baselines, runner and scoring
@@ -57,8 +86,10 @@ schemas/           # Exported JSON schemas
 tests/             # Tests across components
 ```
 
-`benchmark/` and `evaluation/` are starting points for the remaining workstreams.
-`tools/reference.py` is the development backend until the full engine is integrated.
+`evaluation/` remains a starting point for the runner/scorer workstream.
+`tools/reference.py` is preserved; `tools/engine.py` selects tested computations
+from `tools/inference.py`. Track B's optional ANM extra uses NumPy and never routes
+direction predictions through Track A's effect verifier.
 See [data conventions](data/README.md) before adding cases.
 
 ## Development
@@ -67,7 +98,8 @@ See [data conventions](data/README.md) before adding cases.
 bash scripts/check.sh
 ```
 
-This runs lint, formatting checks, tests, the offline demo and the package build.
+This installs the ANM extra and runs lint, formatting, tests, both Track A demos,
+the synthetic ANM handshake and package builds.
 GitHub Actions runs the same checks on Python 3.12 and 3.13.
 
 Use a branch and open a pull request into `main`. See [contributing](CONTRIBUTING.md)
