@@ -45,3 +45,21 @@ calculation remains necessary before using that result as a research label.
 The existing `tools/graph.py` remains the runtime structural API. Parent,
 ancestor, descendant, and valid-adjustment-set queries extend it without moving
 or changing `has_path` and `valid_adjustment`.
+
+## Small question set
+
+From the repository root, generate seven deterministic Track A questions across
+two graph groups:
+
+```bash
+python -m causalbridge.benchmark.pilot
+```
+
+This writes visible runtime cases to `data/pilot/track_a_small.jsonl` and
+evaluator-only labels and complete models to the git-ignored
+`data/oracle/track_a_small.jsonl`. Run with the project's installed environment
+or set `PYTHONPATH=src` for a source checkout. The questions cover graph-only,
+observational-joint, and complete-CPT evidence, plus reachability and no-path
+controls. Numeric and witness labels are marked `local_checked_awaiting_anish`;
+structural controls are marked `structural_checked`. Do not treat this small set
+as the planned 10-group validated pilot.
