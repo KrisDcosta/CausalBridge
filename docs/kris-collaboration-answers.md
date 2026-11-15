@@ -1,7 +1,8 @@
 # Kris: defined v1 collaboration answers
 
-Status: implementation commitments and proposed integration boundary, 12 November
-2026. Specification is defined; implementation/mock/integration validation is pending.
+Status: Phases 1–2 locally implemented and tested, updated 14 November 2026.
+Mock runner/storage/replay validation passes. Actual production adapters, independent
+artifact audit and live research validation remain pending. See `kris-phase2.md`.
 See `kris-track-b-plan.md`, section “Base version v1”, for scope and acceptance gates.
 
 ## What will the E1–E4 evidence packages contain?
@@ -70,8 +71,8 @@ support remains a separate audit unless an explicit semantic checker exists.
 
 ## Verification and handoff
 
-We can implement our evidence/runner with fixtures independently. Before declaring
-it verified, a separate auditor will inspect persisted artifacts and must detect
+The evidence/runner now passes fixture tests independently of teammate adapters.
+The Phase 3 independent auditor still needs to inspect artifacts and detect
 injected row/hash changes, missing/duplicate trials, leakage, extra S2 calls and
 invalid releases. Contract tests then run against your actual predictor/checker
 and Faizah's export consumer. Live results are a later research gate.
@@ -79,3 +80,23 @@ and Faizah's export consumer. Live results are a later research gate.
 Outstanding teammate questions are in the shared collaboration document under
 “Stuff Kris needs”; they concern concrete handoffs and boundary conventions rather
 than permission to design this workstream.
+
+
+## Implemented Phase 2 interface
+
+`evaluation.runner.ExperimentRunner.run(envelopes, model, replicate_id="0",
+retry_id=None)` uses the exact `discovery.prompts.render` messages/schema with
+one `model.generate` per new S0/S1 trial. It journals started/raw/finished records,
+retains failures, and resumes without implicit retry. `replay_s2(manifest_id,
+checker)` reloads saved S1 and calls `checker.check(envelope, saved_attempt,
+receipt)` with no model argument. Cache keys cover evidence/messages/schema,
+source fingerprint, model/config/identity and replicate/retry. Check results
+cannot change a saved arrow or parent identity. See the saved demo and test
+commands in `kris-phase2.md` for proof of 24 initial/0 resumed calls.
+
+These types live in `discovery/contracts.py` to avoid overwriting Vaishak's
+merged `discovery/schemas.py`. His predictor/checker adapters require explicit
+translation and original ANM provenance receipts; they are not implicitly
+compatible. The compact model-visible MethodCard does not replace the detailed
+ANM request or VerificationContext. The shared collaboration document has been
+updated with concise answers stating this implemented/pending boundary.

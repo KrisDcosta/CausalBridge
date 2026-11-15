@@ -6,6 +6,13 @@ import json
 import pytest
 from pydantic import ValidationError
 
+from causalbridge.discovery.contracts import (
+    DirectionProposal,
+    EvidencePackage,
+    MethodCard,
+    RuntimePair,
+    SelectionSpec,
+)
 from causalbridge.discovery.evidence import (
     build_packages,
     canonical_json,
@@ -15,13 +22,6 @@ from causalbridge.discovery.evidence import (
     summarize,
 )
 from causalbridge.discovery.prompts import BASE, CAUTION, output_schema, render
-from causalbridge.discovery.contracts import (
-    DirectionProposal,
-    EvidencePackage,
-    MethodCard,
-    RuntimePair,
-    SelectionSpec,
-)
 from causalbridge.llm.parser import parse_json
 
 
@@ -212,8 +212,8 @@ def test_direction_proposals_and_strict_parser():
 
 
 def test_contract_example_roundtrip_and_no_execution():
-    from causalbridge.discovery.example import contract_example
     from causalbridge.discovery.contracts import PredictionAttempt, ReleaseRecord
+    from causalbridge.discovery.example import contract_example
 
     example = contract_example()
     answer = PredictionAttempt.model_validate(example["answer_attempt"])

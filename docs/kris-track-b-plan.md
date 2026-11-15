@@ -476,3 +476,13 @@ the mapping. Evidence envelopes hold trusted hashes; only the payload is prompte
 Compact ANM cards are supplied by an adapter (fixture cards here), not computed
 by our package builder. Proposal fields are structurally validated; evidence-use
 and overclaim adjudication belong to the production checker and audit.
+
+
+## Phase 2 implementation record
+
+See `docs/kris-phase2.md` for the completed local runner/storage/replay behavior,
+reproduction commands, tests and explicit Phase 4 adapter boundary. Upstream main
+`48d6cda` is merged locally; our Phase 1 types moved to `discovery/contracts.py`
+to preserve Vaishak's public `discovery/schemas.py`. Research scope and owned
+runner semantics are unchanged. The production prediction/checker formats differ
+and are not falsely presented as integrated by the scripted Phase 2 demo.

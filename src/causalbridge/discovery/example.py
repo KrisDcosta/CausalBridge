@@ -7,8 +7,6 @@ import argparse
 import json
 from pathlib import Path
 
-from causalbridge.discovery.evidence import build_packages, digest, select_pair
-from causalbridge.discovery.prompts import PROMPT_VERSION, output_schema, render
 from causalbridge.discovery.contracts import (
     DirectionProposal,
     MethodCard,
@@ -16,6 +14,8 @@ from causalbridge.discovery.contracts import (
     ReleaseRecord,
     RuntimePair,
 )
+from causalbridge.discovery.evidence import build_packages, digest, select_pair
+from causalbridge.discovery.prompts import PROMPT_VERSION, output_schema, render
 
 
 def contract_example() -> dict:

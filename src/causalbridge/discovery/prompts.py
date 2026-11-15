@@ -2,8 +2,8 @@
 
 from typing import Literal
 
-from causalbridge.discovery.evidence import canonical_json, digest
 from causalbridge.discovery.contracts import DirectionProposal, EvidenceEnvelope
+from causalbridge.discovery.evidence import canonical_json, digest
 
 PROMPT_VERSION = "direction-v1"
 BASE = (

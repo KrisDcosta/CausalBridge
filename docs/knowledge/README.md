@@ -24,17 +24,17 @@ explicitly. Do not infer a teammate's status from assigned responsibility.
 
 ## Overall project inventory
 
-Last remote snapshot observed: main `042d5589e2db25706337cc2112e0ce347c11b247`.
+Last remote snapshot observed: main `48d6cda` (PRs #1–#4), merged locally at `1163edf`.
 
 | Workstream | Owner | Evidence-backed status | Evidence / next dependency |
 | --- | --- | --- | --- |
-| Known-DAG parsing, pipeline, contracts | Vaishak | Tested on audited main | 67 original tests and eight-case demo; `docs/verification.md` is historical record |
+| Known-DAG parsing, pipeline, contracts | Vaishak | Tested on audited main | Original Track A suite retained; see current verification record below |
 | Exact reference graph/numeric backend | Existing development implementation; Anish owns production engine | Implemented and covered by original tests; production handoff not observed | `tools/reference.py`, `tools/graph.py`; development enumeration cap 12 nodes |
-| Benchmark generation / exact witnesses | Arunima + Anish | Planned; no completed benchmark observed in audited main | `benchmark/` placeholder; roadmap witness is not a repo deliverable |
+| Benchmark generation / exact witnesses | Arunima + Anish | Implemented small generator/witness/pilot; full benchmark and independent numeric validation pending | `benchmark/generator.py`, `witness.py`, `pilot.py`; 7 runtime cases in `data/pilot/track_a_small.jsonl`, 2 groups, exact witness joint; labels awaiting Anish |
 | Tübingen ingestion and split audit | Faizah | Planned / handoff pending | No real-data loader in audited main |
 | ANM | Anish | Output design supplied; tested implementation not observed | Shared collaboration document; our cards are scripted fixtures |
-| Track B predictor / process checker | Vaishak | Planned / handoff pending | No production Track B implementation in audited main |
-| Evidence, prompts and execution | Kris | Phase 1 locally implemented and tested; execution pending | See phase tracker below |
+| Track B predictor / process checker | Vaishak | Implemented/tested merged | `llm/predictor.py`, `verifier/checks.py`, `verifier/bindings.py`; actual runner adapter not integrated |
+| Evidence, prompts and execution | Kris | Phases 1–2 locally implemented/tested; real adapter integration pending | See phase tracker below |
 | Scoring / intervals | Faizah | Planned / handoff pending | No scorer in audited main |
 | Live pilot / held-out findings | Team | Not executed here | No research performance claims |
 
@@ -43,8 +43,8 @@ Last remote snapshot observed: main `042d5589e2db25706337cc2112e0ce347c11b247`.
 | Phase | Current status | Actual deliverables | Remaining exit work |
 | --- | --- | --- | --- |
 | 0 Scope/design | Defined | Scope, architecture, research contrasts, phases and audit procedure; simplified shared questions | Maintain decisions as external handoffs arrive |
-| 1 Contracts/evidence | Locally tested; integration pending | `discovery/schemas.py`, `evidence.py`, `prompts.py`, `example.py`; tests and contract example | External formats remain provisional; no teammate integration claim |
-| 2 Runner/persistence | Planned | Attempt/release shapes only, no execution/store implementation | Durable logs, invocation ledger, resume/cache and model-free replay |
+| 1 Contracts/evidence | Locally tested; integration pending | `discovery/contracts.py`, `evidence.py`, `prompts.py`, `example.py`; tests and contract example | External formats remain provisional; no teammate integration claim |
+| 2 Runner/persistence | Locally implemented/tested | `evaluation/runner.py`, `store.py`, `demo.py`, tests and `docs/kris-phase2.md` | Production adapter remains Phase 4 |
 | 3 Independent artifact audit | Planned | Test matrix specified; no standalone auditor yet | Separate reader plus deliberate corruption tests |
 | 4 Integration | Planned | No real external adapters yet | Loader, ANM, predictor/checker and scorer consumer |
 | 5 Pilot/freeze | Planned | None | Live model, audited pilot groups, budget review and frozen protocol |
@@ -52,7 +52,7 @@ Last remote snapshot observed: main `042d5589e2db25706337cc2112e0ce347c11b247`.
 
 ## Phase 1 behavior and files
 
-- [Contracts](../../src/causalbridge/discovery/schemas.py): no evaluator fields;
+- [Contracts](../../src/causalbridge/discovery/contracts.py): no evaluator fields;
   strict finite rows; separate direction proposal; method consistency; attempt and
   process release shapes. These are our v1 boundary, adaptable to teammates.
 - [Evidence](../../src/causalbridge/discovery/evidence.py): independent seeded
@@ -120,6 +120,36 @@ scripted fixtures and mathematical examples separately labeled.
 - No model calls, real ANM calculation or production checker execution occurred.
 - Standalone independent artifact auditing remains Phase 3, not claimed complete.
 
-Local work is not yet committed, pushed or merged. This record describes a tested
-working tree, not remote main. Test counts are descriptive; acceptance depends on
+Phase 1 was subsequently committed locally at `e8e0f90`, then remote main merged
+at `1163edf`. Our work has not been pushed or merged to remote main. This record
+describes local work, not remote main. Test counts are descriptive; acceptance depends on
 invariants exercised and the documented limits, not counts or coverage alone.
+
+## Phase 2 update — 14 November 2026
+
+Reviewed remote main `48d6cda`: Arunima's small synthetic benchmark and exact witness
+joint export, plus Vaishak's Track B schemas/predictor/checker and integration smoke,
+are merged. Repository code is authoritative where the collaboration document's
+older examples differ (e.g. directional_scores is not a current prediction field).
+Anish's real ANM/independent numerical confirmation and Faizah's real loader/scorer
+have not been observed here; this is not a claim they have done no work elsewhere.
+
+Our Phase 2 implementation and reproducible demo are documented in
+[kris-phase2.md](../kris-phase2.md). The runner stores all raw/parsed/failure outcomes,
+process-locked journal events, manifests, per-invocation usage, retry lineage,
+S2 parent links and cache identities. Fixture replay is complete; real Vaishak
+adapter and ANM-request provenance remain Phase 4. Phase 3 independent artifact
+auditing is next. No live experiment has been run.
+
+### Phase 2 verification
+
+- Full combined `PYTHONPATH=src UV_CACHE_DIR=/tmp/causalbridge-uv-cache bash scripts/check.sh`: 303 tests pass, lint/format pass, unchanged eight-case Track A demo, wheel/sdist build pass.
+- 13 Phase 2 runner/storage test cases pass; 23 Phase 1 cases remain passing alongside the merged upstream suite.
+- Final reproduction directory: `runs/kris-phase2-final` (ignored runtime artifacts).
+  Manifest `8b4d098795aef586b37d9b1c1d23da249d1987784a089a1cb23a1496ecfe826b`:
+  first invocation 24 calls / 12 S1 replay records; second invocation 0 new calls / 24 reused trials.
+- Saved usage unknown for demo fixtures; counting tests use explicitly synthetic token values.
+- Shared document now contains implemented answers beneath Kris's three original
+  questions. Connector readback confirmed all three answers and unchanged other text.
+- Phase 2 source/docs are committed locally with this update. No push/remote PR or
+  real model/ANM/scoring run was performed. Phase 3 independent audit remains pending.
