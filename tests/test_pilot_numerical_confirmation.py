@@ -10,7 +10,7 @@ from math import prod
 
 import pytest
 
-from causalbridge.benchmark.pilot import build_small_pilot
+from causalbridge.benchmark.pilot import build_small_pilot, build_track_a_pilot
 from causalbridge.schemas import Query, RuntimeCase, ToolRequest
 from causalbridge.tools.engine import CausalEngineBackend
 from causalbridge.tools.inference import compute_effect
@@ -68,8 +68,10 @@ def test_same_visible_marginal_opposite_effect_witness_confirmed_independently()
     assert CausalEngineBackend().execute(request, visible).value is None
 
 
-def test_all_pilot_numeric_labels_match_independent_rational_references():
-    _, labels = build_small_pilot()
+@pytest.mark.parametrize("build_pilot", (build_small_pilot, build_track_a_pilot))
+def test_all_pilot_numeric_labels_match_independent_rational_references(build_pilot):
+    cases, labels = build_pilot()
+    visible_by_id = {case.case_id: case for case in cases}
     for label in labels:
         query = Query.model_validate(label["query"])
         if query.question_type == "reachability":
@@ -85,3 +87,24 @@ def test_all_pilot_numeric_labels_match_independent_rational_references():
         else:
             assert len(set(exacts)) == 2
             assert exacts[0] * exacts[1] < 0
+            visible = visible_by_id[label["case_id"]]
+            request = ToolRequest(
+                operation="compute_effect", query=query, evidence_digest=visible.evidence_digest()
+            )
+            result = CausalEngineBackend().execute(request, visible)
+            assert result.value is None and result.error is not None
+            for raw in label["oracle_models"]:
+                model = RuntimeCase.model_validate(raw)
+                assert model.graph_nodes == visible.graph_nodes
+                assert model.graph_edges == visible.graph_edges
+                for visible_cpt in visible.visible_cpts:
+                    assert visible_cpt in model.visible_cpts
+                if visible.visible_joint is not None:
+                    joint = exact_observational_joint(model)
+                    for key, expected in visible.visible_joint.probabilities.items():
+                        assert sum(
+                            p
+                            for assignment, p in joint
+                            if "".join(str(assignment[v]) for v in visible.visible_joint.variables)
+                            == key
+                        ) == Fraction(str(expected))

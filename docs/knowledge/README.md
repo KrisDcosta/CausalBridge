@@ -24,13 +24,14 @@ explicitly. Do not infer a teammate's status from assigned responsibility.
 
 ## Overall project inventory
 
-Last remote snapshot observed: main `b1718e7` (PRs #1–#5), merged locally at `d990af8`.
+Last remote snapshot observed: main `1638d67` (PRs #1–#6). The ten-group Track A pilot
+is the subsequent benchmark change; see [its handoff](../track_a_pilot.md).
 
 | Workstream | Owner | Evidence-backed status | Evidence / next dependency |
 | --- | --- | --- | --- |
 | Known-DAG parsing, pipeline, contracts | Vaishak | Tested on audited main | Original Track A suite retained; see current verification record below |
 | Exact graph/numeric backend | Anish | Production engine merged and tested | `tools/inference.py`, `tools/engine.py`; reference adapter retained separately |
-| Benchmark generation / exact witnesses | Arunima + Anish | Small generator/witness/pilot implemented; independent engine confirmation tests merged; full benchmark pending | `benchmark/generator.py`, `witness.py`, `pilot.py`; 7 runtime cases in `data/pilot/track_a_small.jsonl`, 2 groups, exact witness joint; `test_pilot_numerical_confirmation.py` now checks independent engine |
+| Benchmark generation / exact witnesses | Arunima + Anish | Ten-group synthetic pilot implemented and checked; live run pending | `benchmark/generator.py`, `witness.py`, `pilot.py`; 50 runtime cases in `data/pilot/track_a_10_groups.jsonl`, exact witness joint and rational/engine confirmation tests |
 | Tübingen ingestion and split audit | Faizah | Planned / handoff pending | No real-data loader in audited main |
 | ANM | Anish | Merged and exercised through our native runner | Real KRR/HSIC and durable pre-execution requests; synthetic observations only |
 | Track B predictor / process checker | Vaishak | Implemented/tested merged | `llm/predictor.py`, `verifier/checks.py`, `verifier/bindings.py`; native runner integration tested |
