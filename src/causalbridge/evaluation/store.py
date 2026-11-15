@@ -10,11 +10,11 @@ from uuid import uuid4
 from causalbridge.discovery.evidence import canonical_json, digest
 
 
-def atomic_json(path: Path, value):
+def atomic_json(path: Path, value, *, serializer=canonical_json):
     path.parent.mkdir(parents=True, exist_ok=True)
     temp = path.with_name(path.name + "." + uuid4().hex + ".tmp")
     with temp.open("x", encoding="utf-8") as out:
-        out.write(canonical_json(value) + "\n")
+        out.write(serializer(value) + "\n")
         out.flush()
         os.fsync(out.fileno())
     os.replace(temp, path)
@@ -26,7 +26,8 @@ def atomic_json(path: Path, value):
 
 
 class Journal:
-    def __init__(self, root: Path | str):
+    def __init__(self, root: Path | str, *, serializer=canonical_json):
+        self.serializer = serializer
         self.root = Path(root)
         self.root.mkdir(parents=True, exist_ok=True)
         self.path = self.root / "events.jsonl"
@@ -88,7 +89,7 @@ class Journal:
         )
         record = payload | {"digest": digest(payload)}
         with self.path.open("a", encoding="utf-8") as out:
-            out.write(canonical_json(record) + "\n")
+            out.write(self.serializer(record) + "\n")
             out.flush()
             os.fsync(out.fileno())
         self.events.append(record)

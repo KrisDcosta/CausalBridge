@@ -497,3 +497,12 @@ with 31 adversarial/clean-control test cases. Full suite 334 passes. See
 Runner v1.1 closes audit evidence gaps with invocation links and private source
 receipts; production adapters remain Phase 4. This is computational independence,
 not a claim of separate human review or live scientific validation.
+
+
+## Phase 4 available-component integration
+
+Main `b1718e7` includes Anish's ANM and independent engine. These are locally merged
+and exercised with Vaishak's predictor/checker via a versioned native integration
+path, preserving native typed outputs/receipts. Synthetic integration gate passes;
+real loader/scorer gate remains open. See `docs/kris-phase4.md` for code, 495-test
+verification, baseline/export semantics, native audit and exact remaining handoffs.

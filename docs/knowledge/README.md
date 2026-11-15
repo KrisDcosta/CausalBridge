@@ -24,17 +24,17 @@ explicitly. Do not infer a teammate's status from assigned responsibility.
 
 ## Overall project inventory
 
-Last remote snapshot observed: main `48d6cda` (PRs #1–#4), merged locally at `1163edf`.
+Last remote snapshot observed: main `b1718e7` (PRs #1–#5), merged locally at `d990af8`.
 
 | Workstream | Owner | Evidence-backed status | Evidence / next dependency |
 | --- | --- | --- | --- |
 | Known-DAG parsing, pipeline, contracts | Vaishak | Tested on audited main | Original Track A suite retained; see current verification record below |
-| Exact reference graph/numeric backend | Existing development implementation; Anish owns production engine | Implemented and covered by original tests; production handoff not observed | `tools/reference.py`, `tools/graph.py`; development enumeration cap 12 nodes |
-| Benchmark generation / exact witnesses | Arunima + Anish | Implemented small generator/witness/pilot; full benchmark and independent numeric validation pending | `benchmark/generator.py`, `witness.py`, `pilot.py`; 7 runtime cases in `data/pilot/track_a_small.jsonl`, 2 groups, exact witness joint; labels awaiting Anish |
+| Exact graph/numeric backend | Anish | Production engine merged and tested | `tools/inference.py`, `tools/engine.py`; reference adapter retained separately |
+| Benchmark generation / exact witnesses | Arunima + Anish | Small generator/witness/pilot implemented; independent engine confirmation tests merged; full benchmark pending | `benchmark/generator.py`, `witness.py`, `pilot.py`; 7 runtime cases in `data/pilot/track_a_small.jsonl`, 2 groups, exact witness joint; `test_pilot_numerical_confirmation.py` now checks independent engine |
 | Tübingen ingestion and split audit | Faizah | Planned / handoff pending | No real-data loader in audited main |
-| ANM | Anish | Output design supplied; tested implementation not observed | Shared collaboration document; our cards are scripted fixtures |
-| Track B predictor / process checker | Vaishak | Implemented/tested merged | `llm/predictor.py`, `verifier/checks.py`, `verifier/bindings.py`; actual runner adapter not integrated |
-| Evidence, prompts and execution | Kris | Phases 1–3 locally implemented/tested; real adapter integration pending | See phase tracker below |
+| ANM | Anish | Merged and exercised through our native runner | Real KRR/HSIC and durable pre-execution requests; synthetic observations only |
+| Track B predictor / process checker | Vaishak | Implemented/tested merged | `llm/predictor.py`, `verifier/checks.py`, `verifier/bindings.py`; native runner integration tested |
+| Evidence, prompts and execution | Kris | Phases 1–3 tested; native component integration tested, real-data/scorer handoff pending | See phase tracker below |
 | Scoring / intervals | Faizah | Planned / handoff pending | No scorer in audited main |
 | Live pilot / held-out findings | Team | Not executed here | No research performance claims |
 
@@ -46,7 +46,7 @@ Last remote snapshot observed: main `48d6cda` (PRs #1–#4), merged locally at `
 | 1 Contracts/evidence | Locally tested; integration pending | `discovery/contracts.py`, `evidence.py`, `prompts.py`, `example.py`; tests and contract example | External formats remain provisional; no teammate integration claim |
 | 2 Runner/persistence | Locally implemented/tested | `evaluation/runner.py`, `store.py`, `demo.py`, tests and `docs/kris-phase2.md` | Production adapter remains Phase 4 |
 | 3 Independent artifact audit | Locally implemented/tested | `evaluation/audit.py`, frozen `audit_policy.py`, 31 cases and `phase3-audit.json` | Real adapter and live research audit remain later gates |
-| 4 Integration | Planned | No real external adapters yet | Loader, ANM, predictor/checker and scorer consumer |
+| 4 Integration | Partially complete: available components integrated/tested | `integration.py`, native audit, baseline/export projection and demo | Real loader and Faizah scorer-consumer acceptance still pending |
 | 5 Pilot/freeze | Planned | None | Live model, audited pilot groups, budget review and frozen protocol |
 | 6 Held-out/handoff | Planned | None | Frozen runs, independent audit and scoring reconciliation |
 
@@ -175,3 +175,29 @@ claimed. Scripted, merged-production and live-scientific statuses remain distinc
 Current next phase: Phase 4 adapters and boundary tests. Outstanding owned work
 also includes simple-gate/method-only baseline integration and final scoring-export
 consumer agreement. Anish/Faizah handoffs and real model runs remain pending.
+
+## Phase 4 progress — available components integrated
+
+See [Phase 4 handoff](../kris-phase4.md) and [native audit](phase4-audit.json).
+Merged Anish PR #5 at main `b1718e7`; our local merge is `d990af8`.
+Real ANM computation, durable original requests, Vaishak's actual predictor and
+checker now run through the native integration path. Synthetic data/scripted model
+transport remain clearly labeled. The older fixture runner is unchanged in meaning.
+
+Verification: 495 combined tests pass, plus lint/format, reference and engine demos,
+real synthetic ANM handshake and package builds. 18 native integration cases cover
+failure/binding/control paths and signed-zero persistence. Three-case native demo:
+24 initial generations, 12 S2 checks, 0 new calls on resume, 51 analysis rows;
+recorded native audit has zero findings and input-file hashes.
+
+Implemented simple-gate and ANM-only baseline projections; exporter retains all
+scheduled failures and provides opaque A/B mapping IDs. Separate private evaluator
+mapping enables correct post-run reference orientation, without labels in runtime.
+Full original/typed claims and raw model replies are preserved; no lossy proposal
+conversion claims compatibility between different schema versions.
+
+**Phase 4 remains open** for Faizah's real loader, audited snapshot/source-group
+manifest, approved labels/units and scorer-consumer fixture. Latest collaboration
+read still has no Faizah answers. No real-world benchmark, live LLM call, threshold
+tuning or pilot freeze has occurred. Do not advance the knowledge-bank status to
+real-data integrated or evaluated based on this synthetic handshake.
