@@ -1,1 +1,1 @@
-"""Track B evidence contracts; independent of Track A's supplied-DAG schema."""
+"""Track B evidence construction and direction prediction contracts."""
