@@ -201,3 +201,9 @@ manifest, approved labels/units and scorer-consumer fixture. Latest collaboratio
 read still has no Faizah answers. No real-world benchmark, live LLM call, threshold
 tuning or pilot freeze has occurred. Do not advance the knowledge-bank status to
 real-data integrated or evaluated based on this synthetic handshake.
+
+## Review snapshot
+
+[Roadmap status](roadmap-status.md) maps each original work package to implemented
+capabilities and remaining research, including the open Phase 4 data/scorer gate.
+The completed work is being submitted as a draft PR for review; no merge is assumed.
