@@ -6,6 +6,12 @@ sets the scientific scope and ownership. The [team agreement](planning/track_b_t
 records conventions; its proposed examples aren't executable replacements for
 these contracts. Phase 1/2 implementation is preserved in commit `6e7232e`.
 
+PR #4 is now merged into main at `48d6cda`. Anish's additive numerical producer
+implements these existing schemas without changing them; see
+[ANM producer and saved originals](anm_producer.md) for exact APIs, digest scopes,
+files, errors and the computed synthetic handshake. Historical verification
+counts below describe Vaishak's delivery, not the current combined suite.
+
 This handoff adds documentation and an offline example. It preserves all public
 interfaces, release decisions and statistical assumptions. Historical
 [Phase 1](track_b_phase1.md) placeholder checks are superseded by
@@ -322,6 +328,14 @@ must link it to cached S1 and measure checker wall time externally if needed.
 
 ## Anish: original request and cached ANM result
 
+Implemented producer: `discovery.anm_requests.save_anm_request(...)` persists the
+originals; `discovery.anm.execute_anm_request(folder)` fits only after loading
+those files. `load_anm_request(folder).request` returns this exact binding type,
+independently of any result. `load_anm_artifacts(folder)` additionally verifies
+the saved result and reproducibility record. The sample digest covers normalized
+`{ab_mapping_id, rows}`; config digest covers all validated ANMConfig fields/defaults.
+Use a fresh artifact directory per attempt. See [producer guide](anm_producer.md).
+
 Save `ANMRequestBinding` before running ANM, using the actual method sample,
 mapping, split and frozen configuration inputs. Every field below is required;
 threshold is required nullable. The class defines no standalone threshold_version.
@@ -529,8 +543,8 @@ the existing predictor/schemas remain unchanged from their audited baselines.
 
 ### Committed file manifest
 
-The feature branch is `codex/track-b-integration`; neither commit is pushed or
-merged. `6e7232e` preserves the completed implementation and source specifications.
+The original feature branch was `codex/track-b-integration`, now merged by PR #4.
+`6e7232e` preserves the completed implementation and source specifications.
 The follow-up commit contains the handoff/smoke example and the review fix. These
 are the exact 24 distinct paths changed relative to PR #1:
 
@@ -564,9 +578,9 @@ tests/test_track_b_integration.py
 | Outstanding integration item | Owner |
 | --- | --- |
 | Real matched E1–E4 packages, frozen S0/S1 prompts, durable successful-S1 cache/receipts and S2-to-S1 links | Kris |
-| Live ANM adapter, original pre-execution request, precise sample/config/version bytes, frozen tau and reproducibility storage | Anish, with Kris for adapter agreement |
+| Producer/request storage and exact byte conventions implemented; real-data adapter hookup and development-frozen tau remain | Anish with Kris/Faizah for integration and development evaluation |
 | Sanitized eligible observational pair, opaque evaluator mapping, reference/weight/source-group records and scorer | Faizah |
-| Graph/witness compatibility review; independent numerical witness confirmation | Arunima and Anish |
+| Independent numerical witness confirmation complete in test_pilot_numerical_confirmation.py; final dataset/status review remains | Arunima and Anish |
 | Installed model/runtime availability and exact model settings | Kris with Vaishak |
 
 Missing components don't block offline integration. They do block a defensible

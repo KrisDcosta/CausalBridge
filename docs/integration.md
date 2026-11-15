@@ -84,6 +84,16 @@ separate. Query specs bind variables and roles; they contain no answer labels.
 
 ## Anish: replace the development backend
 
+Implemented: `from causalbridge.tools.engine import CausalEngineBackend`; inject
+`CausalEngineBackend()` into `CausalBridge` or select `--backend engine` in demo/run.
+Graph functions are reused; CPT enumeration is bounded at 12 nodes. Public numeric
+helpers enforce existing evidence contracts and preserve unrounded results.
+The reference backend remains available and is still the default.
+
+Track B does not use this graph-tool enum. Its actual ANM implementation and
+pre-execution receipt API are documented in [anm_producer.md](anm_producer.md),
+under the exact [Track B contract](track_b_integration_contract.md).
+
 Implement the protocol in `tools/protocol.py`:
 
 ```python

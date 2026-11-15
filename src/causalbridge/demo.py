@@ -5,6 +5,7 @@ from collections.abc import Iterator
 from causalbridge.llm.client import Generation
 from causalbridge.pipeline import CausalBridge, RunTrace
 from causalbridge.schemas import Assumptions, Proposal, Query, RuntimeCase
+from causalbridge.tools.protocol import ToolBackend
 from causalbridge.tools.reference import ReferenceBackend
 
 
@@ -18,7 +19,9 @@ class FixtureModel:
         return Generation(text=next(self.responses), model="hand_authored_fixture")
 
 
-def demo_runs() -> Iterator[RunTrace]:
+def demo_runs(*, backend: ToolBackend | None = None) -> Iterator[RunTrace]:
+    if backend is None:
+        backend = ReferenceBackend()
     assumptions = Assumptions(
         correct_dag=True, fully_observed=True, independent_noise=True, positivity=True
     )
@@ -126,4 +129,4 @@ def demo_runs() -> Iterator[RunTrace]:
         model = FixtureModel(
             [query.model_dump_json(), plan.model_dump_json(), final.model_dump_json()]
         )
-        yield CausalBridge(model, ReferenceBackend(), model_mode="scripted_fixture").run(case)
+        yield CausalBridge(model, backend, model_mode="scripted_fixture").run(case)

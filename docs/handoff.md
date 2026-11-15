@@ -1,4 +1,32 @@
-# Vaishak's handoff checklist
+# Team handoff checklist
+
+## Anish: numerical engine and ANM request producer
+
+Implemented locally from merged main `48d6cda` on `codex/anish-anm-provenance`
+in the fresh `CausalBridge-Anish` clone. Anish has authorized committing and
+pushing this feature branch; PR creation and merge remain separate steps.
+
+- Track A `CausalEngineBackend` and reusable numerical functions preserve the
+  reference backend and graph/witness code. Select with `--backend engine`.
+- Independent rational tests confirm all merged small-pilot numeric labels and
+  the same-P(X,Y), +0.30/-0.30 witness. Historical oracle tags are left intact.
+- `save_anm_request` writes actual sample/config/split bindings and standalone
+  `request.json` before any numerical execution. It never derives a request from
+  returned provenance. `execute_anm_request` produces existing ANMResult objects.
+- `load_anm_artifacts` resolves/checks reproducibility records and originals;
+  the existing verifier consumes its saved request as context.method_request.
+- `examples/anm_integration.py` demonstrates computed synthetic ANM, a scripted S1
+  prediction and deterministic S2, with separately saved receipts and no new S2 calls.
+
+See [producer/API guide](anm_producer.md), [verification](verification.md), and the
+authoritative [Track B contract](track_b_integration_contract.md).
+
+Outstanding: real eligible samples and source-group development evaluation,
+matched E1-E4 packages, actual S0/S1 runner/cache, a frozen tau, and live model runs.
+No numerical score here is a causal probability or proof. Do not reconstruct a
+missing request from a result. Create a fresh directory for a retry.
+
+## Vaishak: original orchestration handoff
 
 ## What you can demonstrate now
 
@@ -27,8 +55,8 @@ can also accept useful answers.
 
 1. Review `schemas/` with Anish and Arunima. Confirm parent ordering, visibility,
    binary treatment convention, adjustment-set representation and assumption flags.
-2. Replace `ReferenceBackend` with Anish's adapter. Run the existing hand-computed
-   tests against the adapter as well as against the reference implementation.
+2. Anish's adapter is now selectable, with shared fixture parity and independent
+   numerical controls. Retain the reference default until the team changes it.
 3. Start the chosen model server. Run `examples/runtime_cases.jsonl` and inspect
    every parsed query, raw JSON reply, token count and failure stage.
 4. Give Kris the pipeline entry point and `RunTrace` contract. Keep A–E data and
@@ -40,7 +68,6 @@ can also accept useful answers.
 
 ## Before calling the whole project complete
 
-The team still needs verified benchmark witnesses, the real engine integration,
-live model runs, matched baselines, group-level uncertainty estimates, scoring
-audits and the report. This repository completes the implementation of your
-software workstream and provides interfaces for those components.
+The numerical engine and independent pilot/witness checks are implemented. The
+team still needs full benchmark validation, real-data/live-model runs, matched
+baselines, group-level uncertainty estimates, scoring audits and the report.
