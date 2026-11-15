@@ -206,4 +206,13 @@ real-data integrated or evaluated based on this synthetic handshake.
 
 [Roadmap status](roadmap-status.md) maps each original work package to implemented
 capabilities and remaining research, including the open Phase 4 data/scorer gate.
-The completed work is being submitted as a draft PR for review; no merge is assumed.
+The completed work is submitted as [draft PR #6](https://github.com/mvaishak/CausalBridge/pull/6); no merge is assumed.
+
+### PR publication
+
+Draft [PR #6](https://github.com/mvaishak/CausalBridge/pull/6) targets team `main`
+from `KrisDcosta:codex/kris-track-b-plan`. Direct push to the team repository was
+rejected because the authenticated account has pull-only access. A fork under
+KrisDcosta was created/verified and the branch pushed there. Team origin remains
+unchanged. GitHub readback confirms OPEN, draft and mergeable; CI was not yet
+reported at creation. Local 495-test validation remains distinct from GitHub CI.
