@@ -1,0 +1,35 @@
+{
+  "audit_version": "artifact-audit-v1",
+  "auditor_source_sha256": "b1dc6e17115ad661d0f1b86cfbf654b6516d2ceb561b6bc71cbad3bdd34b2070",
+  "policy_digest": "60d136d4c303ad6fc86d1779595c250bbf7c938d9e0a7630c883030616223c66",
+  "input_files_sha256": {
+    "events.jsonl": "7ee03d64d1a0e34c990bdf3071cb3d0b2cbf2e303daaa435b1c7bce65eef1d29",
+    "exports/67cf37efc655041ec5266996118217f45d959cfc9370d10b31b2cf0eb8d63e6a-s2.json": "241dc1e44384a31b37df46ba3bee6dddace7a7153f787381499e03308d65d398",
+    "exports/67cf37efc655041ec5266996118217f45d959cfc9370d10b31b2cf0eb8d63e6a.json": "3809eadc45f27141eb901c6576a30b0197da76735629f20a6c84b20cf4da9446",
+    "invocations/3a99c7fa7673470abe4a3abe8182f16b.json": "3653590cbbe70f800e12a1bc7d2a920ff4ef47209b0815ceca998ae6ff1259a7",
+    "invocations/a2b05a0b42614089896b844425845c03.json": "3809eadc45f27141eb901c6576a30b0197da76735629f20a6c84b20cf4da9446",
+    "manifests/67cf37efc655041ec5266996118217f45d959cfc9370d10b31b2cf0eb8d63e6a.json": "9939b83bbfd435e18255fb9b673ff4e43d5de63244c23d9dfcc265245938e122",
+    "provenance.json": "4a4e3583afe1bf89233697ff32c4005dd1ddf6a29e4e1e02f568c6226c038eff"
+  },
+  "passed": true,
+  "counts": {
+    "events": 86,
+    "trials": 24,
+    "manifests": 1,
+    "s2_records": 12
+  },
+  "findings": [],
+  "scope": {
+    "require_matrix": true,
+    "require_s2": true,
+    "require_source": true
+  },
+  "limitations": [
+    "Checks recorded evidence consistency, not causal correctness or ANM computation.",
+    "Source receipts are producer-supplied, not authenticated.",
+    "Cannot detect secrets or direction clues embedded in approved variable text.",
+    "Journal cannot prove an unlogged external call did not occur.",
+    "Hashes do not authenticate data against complete malicious rewriting.",
+    "Checker semantics and unrestricted explanation support require separate review."
+  ]
+}

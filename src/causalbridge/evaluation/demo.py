@@ -17,6 +17,7 @@ from causalbridge.discovery.contracts import (
 from causalbridge.discovery.evidence import build_packages, select_pair
 from causalbridge.discovery.example import contract_example
 from causalbridge.evaluation.runner import ExperimentRunner
+from causalbridge.evaluation.store import atomic_json
 from causalbridge.llm.client import Generation
 
 
@@ -58,6 +59,7 @@ def main():
     args = parser.parse_args()
     example = contract_example()
     packages = []
+    provenance = []
     for i in range(3):
         pair = RuntimePair.model_validate(example["runtime_input"] | {"case_id": f"D{i + 1:04d}"})
         selected = select_pair(pair)
@@ -66,9 +68,16 @@ def main():
             | {"sample_digest": selected.method_sample_digest}
         )
         packages.extend(build_packages(selected, method))
+        provenance.append(
+            {
+                "runtime_input": pair.model_dump(mode="json"),
+                "selection": selected.selection.model_dump(mode="json"),
+            }
+        )
     runner = ExperimentRunner(
         args.output, model_identity="scripted-phase2-v1", identity_verified=True
     )
+    atomic_json(args.output / "provenance.json", {"version": "selection-v1", "cases": provenance})
     result = runner.run(packages, ScriptedTransport())
     releases = runner.replay_s2(result["manifest_id"], ScriptedChecker())
     print(

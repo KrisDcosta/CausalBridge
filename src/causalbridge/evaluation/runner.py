@@ -23,7 +23,7 @@ from causalbridge.evaluation.store import Journal, atomic_json
 from causalbridge.llm.client import Generation, JSONModel, ModelConfig
 from causalbridge.llm.parser import parse_json
 
-RUNNER_VERSION = "kris-runner-v1"
+RUNNER_VERSION = "kris-runner-v1.1"
 
 
 class Checker(Protocol):
@@ -179,6 +179,7 @@ class ExperimentRunner:
                 ]
                 start = item | {
                     "attempt_id": uuid4().hex,
+                    "invocation_id": invocation_id,
                     "original_envelope_digest": digest(item["envelope"]),
                     "parent_attempt_id": prior[-1]["attempt_id"]
                     if retry_id is not None and prior
@@ -226,6 +227,7 @@ class ExperimentRunner:
                 "manifest_id": manifest_key,
                 "invocation_id": invocation_id,
                 "new_model_calls": new_calls,
+                "new_trial_keys": sorted(new_keys),
                 "cached_or_recovered_trials": len(planned) - new_calls,
                 "trials": [dict(start=starts[p["key"]], outcome=ends[p["key"]]) for p in planned],
             }

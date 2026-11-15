@@ -34,7 +34,7 @@ Last remote snapshot observed: main `48d6cda` (PRs #1–#4), merged locally at `
 | Tübingen ingestion and split audit | Faizah | Planned / handoff pending | No real-data loader in audited main |
 | ANM | Anish | Output design supplied; tested implementation not observed | Shared collaboration document; our cards are scripted fixtures |
 | Track B predictor / process checker | Vaishak | Implemented/tested merged | `llm/predictor.py`, `verifier/checks.py`, `verifier/bindings.py`; actual runner adapter not integrated |
-| Evidence, prompts and execution | Kris | Phases 1–2 locally implemented/tested; real adapter integration pending | See phase tracker below |
+| Evidence, prompts and execution | Kris | Phases 1–3 locally implemented/tested; real adapter integration pending | See phase tracker below |
 | Scoring / intervals | Faizah | Planned / handoff pending | No scorer in audited main |
 | Live pilot / held-out findings | Team | Not executed here | No research performance claims |
 
@@ -45,7 +45,7 @@ Last remote snapshot observed: main `48d6cda` (PRs #1–#4), merged locally at `
 | 0 Scope/design | Defined | Scope, architecture, research contrasts, phases and audit procedure; simplified shared questions | Maintain decisions as external handoffs arrive |
 | 1 Contracts/evidence | Locally tested; integration pending | `discovery/contracts.py`, `evidence.py`, `prompts.py`, `example.py`; tests and contract example | External formats remain provisional; no teammate integration claim |
 | 2 Runner/persistence | Locally implemented/tested | `evaluation/runner.py`, `store.py`, `demo.py`, tests and `docs/kris-phase2.md` | Production adapter remains Phase 4 |
-| 3 Independent artifact audit | Planned | Test matrix specified; no standalone auditor yet | Separate reader plus deliberate corruption tests |
+| 3 Independent artifact audit | Locally implemented/tested | `evaluation/audit.py`, frozen `audit_policy.py`, 31 cases and `phase3-audit.json` | Real adapter and live research audit remain later gates |
 | 4 Integration | Planned | No real external adapters yet | Loader, ANM, predictor/checker and scorer consumer |
 | 5 Pilot/freeze | Planned | None | Live model, audited pilot groups, budget review and frozen protocol |
 | 6 Held-out/handoff | Planned | None | Frozen runs, independent audit and scoring reconciliation |
@@ -153,3 +153,25 @@ auditing is next. No live experiment has been run.
   questions. Connector readback confirmed all three answers and unchanged other text.
 - Phase 2 source/docs are committed locally with this update. No push/remote PR or
   real model/ANM/scoring run was performed. Phase 3 independent audit remains pending.
+
+## Phase 3 completion
+
+[Phase 3 specification and evidence](../kris-phase3.md) records the separate
+artifact reader and adversarial tests. [Default-scope audit report](phase3-audit.json)
+records zero findings for the three-case fixture bundle: 24 trials, 12 S2 records,
+86 journal events. Input artifacts, frozen policy and auditor source are hashed.
+All 334 combined tests, lint/format, Track A demo and package builds pass.
+
+Audit-discovered instrumentation gaps were closed: Runner v1.1 links each new
+call to its invocation and persists new trial keys; the demo stores a private
+label-free source/selection sidecar before prediction. Legacy bundles missing
+these receipts are not retroactively treated as fully auditable.
+
+Phase 3 independence is a separate implementation/read path, not an independent
+human reviewer. It uses hand expectations, malformed/corrupted artifacts and
+positive/negative mechanism controls. No causal accuracy or ANM computation is
+claimed. Scripted, merged-production and live-scientific statuses remain distinct.
+
+Current next phase: Phase 4 adapters and boundary tests. Outstanding owned work
+also includes simple-gate/method-only baseline integration and final scoring-export
+consumer agreement. Anish/Faizah handoffs and real model runs remain pending.

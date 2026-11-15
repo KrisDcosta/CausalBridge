@@ -486,3 +486,14 @@ reproduction commands, tests and explicit Phase 4 adapter boundary. Upstream mai
 to preserve Vaishak's public `discovery/schemas.py`. Research scope and owned
 runner semantics are unchanged. The production prediction/checker formats differ
 and are not falsely presented as integrated by the scripted Phase 2 demo.
+
+
+## Phase 3 completion record
+
+Local offline gate is complete: separate read-only artifact auditor, frozen
+prompt policy, source/mapping replay, failure/call/usage accounting and S2 integrity,
+with 31 adversarial/clean-control test cases. Full suite 334 passes. See
+`docs/kris-phase3.md` and `docs/knowledge/phase3-audit.json` for scope and reproduction.
+Runner v1.1 closes audit evidence gaps with invocation links and private source
+receipts; production adapters remain Phase 4. This is computational independence,
+not a claim of separate human review or live scientific validation.
