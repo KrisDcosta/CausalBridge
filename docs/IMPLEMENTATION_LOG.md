@@ -2,6 +2,11 @@
 
 ## Anish: roadmap numerical inference and ANM producer — 2026-11-14
 
+- Publication follow-up: CI caught an unformatted Python snippet in the newly
+  added `docs/anm_producer.md`. Applied Ruff to the documentation, rechecked
+  formatting/lint, and pushed a documentation-only correction. The first failed
+  run stopped before pytest; it was not a numerical-test failure.
+
 - Audited all remote branches. PRs #1-#3 supply graph/witness generation and a
   seven-case pilot. PR #4 supplies Track B predictor/checker/contracts. After the
   user requested latest main, created a fresh `CausalBridge-Anish` clone at

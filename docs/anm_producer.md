@@ -34,7 +34,10 @@ from causalbridge.discovery.anm import execute_anm_request, load_anm_artifacts
 
 folder = Path("runs/anm-case-001")  # must not already exist
 original = save_anm_request(
-    rows, case_id="D001", ab_mapping_id="opaque-map-001", directory=folder,
+    rows,
+    case_id="D001",
+    ab_mapping_id="opaque-map-001",
+    directory=folder,
     config=ANMConfig(),  # threshold=None: scores without a direction decision
 )
 result = execute_anm_request(folder)

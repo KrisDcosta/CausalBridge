@@ -1,5 +1,13 @@
 # Verification record
 
+## CI formatting follow-up — 2026-11-14
+
+The first published run for `4c58ad1` failed Ruff's format check on a Python
+example in `docs/anm_producer.md`. Pytest did not run in that CI attempt, and
+the other matrix job was cancelled. The documentation snippet is now formatted;
+local Ruff lint and formatting pass. Runtime implementation is unchanged.
+Inspect the follow-up branch workflow for the full Linux test/build result.
+
 ## Anish numerical engine and saved ANM originals — 2026-11-14
 
 Base: fresh clone of merged main `48d6cda`, feature branch
